@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Core.Entities.Abstract;
+using Core.Domain.Abstract;
 
-namespace Core.Entities.Concrete
+namespace Core.Domain.Concrete
 {
-    public class OperationClaim : IEntity
+    public class OperationClaim : Entity
     {
-        public int Id { get; set; }
         public string OperationClaimName { get; set; }
+
+        public OperationClaim()
+        {
+        }
+
+        public OperationClaim(int id, string operationClaimName) : base(id)
+        {
+            OperationClaimName = operationClaimName;
+        }
     }
 }

@@ -1,6 +1,6 @@
-﻿using Core.Entities.Abstract;
+﻿using Core.Domain.Abstract;
 
-namespace Core.Entities.Dtos
+namespace Core.Domain.Dtos
 {
     public class UserForRegisterDto : IDto
     {

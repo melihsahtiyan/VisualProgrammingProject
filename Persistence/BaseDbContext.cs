@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
+using Core.Domain.Concrete;
+using Microsoft.EntityFrameworkCore ;
 
-namespace Domain
+namespace Persistence
 {
     public class BaseDbContext : DbContext
     {
