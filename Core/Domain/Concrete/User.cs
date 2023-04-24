@@ -14,6 +14,7 @@ namespace Core.Domain.Concrete
         public byte[] PasswordSalt { get; set; }
         public DateTime BirthDate{ get; set; }
         public bool Status { get; set; }
+        public virtual ICollection<UserOperationClaim> UserOperationClaims { get; set; }
 
         public User()
         {

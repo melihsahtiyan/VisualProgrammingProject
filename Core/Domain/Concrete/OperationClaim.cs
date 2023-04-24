@@ -8,6 +8,7 @@ namespace Core.Domain.Concrete
     public class OperationClaim : Entity
     {
         public string OperationClaimName { get; set; }
+        public virtual ICollection<UserOperationClaim> UserOperationClaims { get; set; }
 
         public OperationClaim()
         {

@@ -7,13 +7,18 @@ using System.Text;
 using Core.Domain.Concrete;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Core.DataAccess.EntityFramework
+namespace Core.Persistence.EntityFramework
 {
     public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
         where TEntity : Entity, new()
         where TContext : DbContext, new()
     {
+        protected TContext Context { get; set; }
 
+        public EfEntityRepositoryBase(TContext context)
+        {
+            Context = context;
+        }
         public void Add(TEntity entity)
         {
             using (TContext context = new TContext())
@@ -61,5 +66,40 @@ namespace Core.DataAccess.EntityFramework
                 context.SaveChanges();
             }
         }
+
+        public async Task<TEntity> AddAsync(TEntity entity)
+        {
+            Context.Entry(entity).State = EntityState.Added;
+            await Context.SaveChangesAsync();
+            return entity;
+        }
+
+        public async Task<TEntity> UpdateAsync(TEntity entity)
+        {
+            Context.Entry(entity).State = EntityState.Modified;
+            await Context.SaveChangesAsync();
+            return entity;
+        }
+
+        public async Task<TEntity> DeleteAsync(TEntity entity)
+        {
+            Context.Entry(entity).State = EntityState.Deleted;
+            await Context.SaveChangesAsync();
+            return entity;
+        }
+
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter)
+        {
+            return await Context.Set<TEntity>().SingleOrDefaultAsync(filter);
+        }
+
+        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null)
+        {
+            return filter == null
+                ? await Context.Set<TEntity>().ToListAsync()
+                : await Context.Set<TEntity>().Where(filter).ToListAsync();
+        }
+
+        
     }
 }
