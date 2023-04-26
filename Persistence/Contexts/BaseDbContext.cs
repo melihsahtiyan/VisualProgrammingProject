@@ -5,15 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Domain.Concrete;
 using Domain.Entities;
-using Microsoft.EntityFrameworkCore ;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
-namespace Persistence
+namespace Persistence.Contexts
 {
     public class BaseDbContext : DbContext
     {
-        public BaseDbContext(DbContextOptions<BaseDbContext> options) : base(options)
-        {
-        }
+        protected IConfiguration Configuration { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
@@ -23,10 +22,15 @@ namespace Persistence
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<WarehouseProducts> WarehouseProducts { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-            optionsBuilder.UseNpgsql("postgresql:MELIH:12345@postgres:54321/VisualProgrammingMidtermProject");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
 
+        }
 
+        public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
+        {
+            Configuration = configuration;
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<WarehouseProducts>(e =>
