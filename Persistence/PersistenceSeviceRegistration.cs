@@ -18,6 +18,9 @@ namespace Persistence
             IConfiguration configuration)
 
         {
+            services.AddDbContext<BaseDbContext>(options =>
+                options.UseNpgsql(
+                    "Host=localhost;Username=postgres;Password=12345;Database=VisualProgrammingMidtermProject;"));
             services.AddScoped<IFactoryRepository, FactoryRepository>();
             services.AddScoped<IWarehouseRepository, WarehouseRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
@@ -25,9 +28,6 @@ namespace Persistence
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserOperationClaimRepository, UserOperationClaimRepository>();
             services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
-            services.AddDbContext<BaseDbContext>(options =>
-                options.UseNpgsql(
-                    configuration.GetConnectionString("VisualProgrammingMidtermProjectConnectionString")));
             return services;
         }
     }

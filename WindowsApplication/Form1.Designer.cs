@@ -28,12 +28,56 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            productTextLabel = new Label();
+            txtChangeButton = new Button();
+            label1 = new Label();
+            SuspendLayout();
+            // 
+            // productTextLabel
+            // 
+            productTextLabel.Location = new Point(0, 0);
+            productTextLabel.Name = "productTextLabel";
+            productTextLabel.Size = new Size(100, 23);
+            productTextLabel.TabIndex = 2;
+            // 
+            // txtChangeButton
+            // 
+            txtChangeButton.Location = new Point(684, 362);
+            txtChangeButton.Name = "txtChangeButton";
+            txtChangeButton.Size = new Size(94, 29);
+            txtChangeButton.TabIndex = 1;
+            txtChangeButton.Text = "click!";
+            txtChangeButton.UseVisualStyleBackColor = true;
+            txtChangeButton.Click += txtChangeButton_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(666, 208);
+            label1.Name = "label1";
+            label1.Size = new Size(116, 20);
+            label1.TabIndex = 3;
+            label1.Text = "productTxtLabel";
+            label1.Click += label1_Click;
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1467, 708);
+            Controls.Add(label1);
+            Controls.Add(txtChangeButton);
+            Controls.Add(productTextLabel);
+            Name = "Form1";
+            Text = "Form1";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Label productTextLabel;
+        private Button txtChangeButton;
+        private Label label1;
     }
 }

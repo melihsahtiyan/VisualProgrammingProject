@@ -22,11 +22,6 @@ namespace Persistence.Contexts
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<WarehouseProducts> WarehouseProducts { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-
-        }
-
         public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
         {
             Configuration = configuration;
