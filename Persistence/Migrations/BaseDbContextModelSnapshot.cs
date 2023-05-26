@@ -17,7 +17,7 @@ namespace Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "7.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -50,27 +50,15 @@ namespace Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Email");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("FirstName");
-
-                    b.Property<string>("IdentityNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("LastName");
+                        .HasColumnName("Name");
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
@@ -89,6 +77,8 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users", (string)null);
+
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Core.Domain.Concrete.UserOperationClaim", b =>
@@ -117,7 +107,7 @@ namespace Persistence.Migrations
                     b.ToTable("UserOperationClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.CustomerRequests", b =>
+            modelBuilder.Entity("Domain.Entities.Orders", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -134,6 +124,10 @@ namespace Persistence.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("Date");
 
+                    b.Property<int>("ManufacturingFactoryId")
+                        .HasColumnType("integer")
+                        .HasColumnName("ManufacturingFactoryId");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("integer")
                         .HasColumnName("ProductId");
@@ -146,51 +140,11 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CustomerFactoryId");
 
+                    b.HasIndex("ManufacturingFactoryId");
+
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CustomerRequests", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.Entities.Factory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("Id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("Address");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("Email");
-
-                    b.Property<bool>("IsCustomer")
-                        .HasColumnType("boolean")
-                        .HasColumnName("IsCustomer");
-
-                    b.Property<bool>("IsSupplier")
-                        .HasColumnType("boolean")
-                        .HasColumnName("IsSupplier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("Name");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("Phone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Factories", (string)null);
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
@@ -294,6 +248,36 @@ namespace Persistence.Migrations
                     b.ToTable("WarehouseProducts", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.Factory", b =>
+                {
+                    b.HasBaseType("Core.Domain.Concrete.User");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Address");
+
+                    b.Property<bool>("IsCustomer")
+                        .HasColumnType("boolean")
+                        .HasColumnName("IsCustomer");
+
+                    b.Property<bool>("IsSupplier")
+                        .HasColumnType("boolean")
+                        .HasColumnName("IsSupplier");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Phone");
+
+                    b.Property<string>("TaxNumber")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("TaxNumber");
+
+                    b.ToTable("Factories", (string)null);
+                });
+
             modelBuilder.Entity("Core.Domain.Concrete.UserOperationClaim", b =>
                 {
                     b.HasOne("Core.Domain.Concrete.OperationClaim", "OperationClaim")
@@ -313,11 +297,17 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.CustomerRequests", b =>
+            modelBuilder.Entity("Domain.Entities.Orders", b =>
                 {
                     b.HasOne("Domain.Entities.Factory", "CustomerFactory")
-                        .WithMany("CustomerRequests")
+                        .WithMany("Orders")
                         .HasForeignKey("CustomerFactoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Factory", "ManufacturingFactory")
+                        .WithMany()
+                        .HasForeignKey("ManufacturingFactoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -328,6 +318,8 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("CustomerFactory");
+
+                    b.Navigation("ManufacturingFactory");
 
                     b.Navigation("Product");
                 });
@@ -362,6 +354,15 @@ namespace Persistence.Migrations
                     b.Navigation("Warehouse");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Factory", b =>
+                {
+                    b.HasOne("Core.Domain.Concrete.User", null)
+                        .WithOne()
+                        .HasForeignKey("Domain.Entities.Factory", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Core.Domain.Concrete.OperationClaim", b =>
                 {
                     b.Navigation("UserOperationClaims");
@@ -370,13 +371,6 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Core.Domain.Concrete.User", b =>
                 {
                     b.Navigation("UserOperationClaims");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Factory", b =>
-                {
-                    b.Navigation("CustomerRequests");
-
-                    b.Navigation("Warehouses");
                 });
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
@@ -389,6 +383,13 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Warehouse", b =>
                 {
                     b.Navigation("WarehouseProducts");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Factory", b =>
+                {
+                    b.Navigation("Orders");
+
+                    b.Navigation("Warehouses");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,12 +14,14 @@ namespace Business
         public static IServiceCollection AddBusinessServices(this IServiceCollection services)
         {
             services.AddScoped<IProductService, ProductManager>();
-            //services.AddScoped<IWarehouseService, WarehouseManager>();
-            //services.AddScoped<IFactoryService, FactoryManager>();
+            services.AddScoped<IWarehouseService, WarehouseManager>();
+            services.AddScoped<IWarehouseProductsService, WarehouseProductsManager>();
+            services.AddScoped<IFactoryService, FactoryManager>();
             services.AddScoped<IAuthService, AuthManager>();
-            //services.AddScoped<IUserService, UserManager>();
+            services.AddScoped<IUserService, UserManager>();
             //services.AddScoped<IUserOperationClaimService, UserOperationClaimManager>();
             //services.AddScoped<IOperationClaimService, OperationClaimManager>();
+            services.AddScoped<IOrdersService, OrdersManager>();
             return services;
         }
     }

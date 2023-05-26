@@ -6,9 +6,11 @@ namespace Core.Domain.Dtos
     {
         public string Email { get; set; }
         public string Password { get; set; }
-        public string IdentityNumber { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string TaxNumber { get; set; }
+        public string Phone { get; set; }
+        public string Address { get; set; }
+        public string Name { get; set; }
+        public bool IsCustomer { get; set; }
+        public bool IsSupplier { get; set; }
     }
 }

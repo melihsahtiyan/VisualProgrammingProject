@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Services;
 using Core.Persistence.Paging;
+using Core.Utilities.Results;
 using Domain.Dtos;
 using Domain.Entities;
 
@@ -25,6 +26,15 @@ namespace Business.Concrete
                 await _productRepository.GetListByDynamicAsync(request.Dynamic, index: request.Index,
                     size: request.Size);
             return products;
+        }
+
+        public IDataResult<List<Product>> GetAll()
+        {
+            var result = _productRepository.GetAll();
+            if(result == null)
+                return new ErrorDataResult<List<Product>>("Products not found!");
+
+            return new SuccessDataResult<List<Product>>(result);
         }
 
         public Product GetById(int id)

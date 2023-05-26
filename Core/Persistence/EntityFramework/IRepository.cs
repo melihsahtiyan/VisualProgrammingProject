@@ -18,6 +18,8 @@ namespace Core.Persistence.EntityFramework
             int index = 0, int size = 10,
             bool enableTracking = true);
 
+        List<T> GetAll(Expression<Func<T, bool>>? predicate = null);
+
         IPaginate<T> GetListByDynamic(Dynamic.Dynamic dynamic,
             Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
             int index = 0, int size = 10, bool enableTracking = true);

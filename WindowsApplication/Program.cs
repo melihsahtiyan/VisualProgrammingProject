@@ -2,12 +2,14 @@ using Business;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
-using Persistence;
+using System;
+using System.IO;
+using System.Windows.Forms;
+using WindowsApplication.Pages;
 using Persistence.Contexts;
 using Persistence.Repositories;
-using WindowsApplication.Pages;
+using Business.Services;
+using Persistence;
 
 namespace WindowsApplication
 {
@@ -20,8 +22,8 @@ namespace WindowsApplication
 
             var services = new ServiceCollection();
             services.AddSingleton(Configuration);
-            services.AddPersistenceServices(Configuration);
-            services.AddTransient<RegisterScreen>();
+            services.AddPersistenceServices();
+            services.AddTransient<LoginScreen>();
             services.AddBusinessServices();
             services.AddControllers();
 
@@ -29,7 +31,7 @@ namespace WindowsApplication
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(serviceProvider.GetRequiredService<RegisterScreen>());
+            Application.Run(serviceProvider.GetRequiredService<LoginScreen>());
         }
 
         public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
@@ -38,5 +40,4 @@ namespace WindowsApplication
             .AddEnvironmentVariables()
             .Build();
     }
-
 }

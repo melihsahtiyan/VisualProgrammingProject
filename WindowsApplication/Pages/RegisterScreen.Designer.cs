@@ -29,22 +29,30 @@
         private void InitializeComponent()
         {
             registerButton = new Button();
-            emailTxtBox = new TextBox();
             lblEmail = new Label();
             lblPassword = new Label();
+            lblName = new Label();
+            addressLbl = new Label();
+            lblTaxNumber = new Label();
+            LoginLinkLbl = new LinkLabel();
+            txtAccount = new Label();
+            failedTxtLbl = new Label();
+            lblPhone = new Label();
+            checkBoxCustomer = new CheckBox();
+            checkBoxSupplier = new CheckBox();
+            emailTxtBox = new TextBox();
             passwordTxtBox = new TextBox();
-            lblFirstName = new Label();
-            firstNameTxtBox = new TextBox();
-            lastNameLbl = new Label();
-            lastNameTxtBox = new TextBox();
-            lblIdentityNumber = new Label();
-            IdentityNumberTxtBox = new TextBox();
-            birthDatePicker = new DateTimePicker();
+            nameTxtBox = new TextBox();
+            phoneTxtBox = new TextBox();
+            taxNumberTxtBox = new TextBox();
+            addressTxtBox = new TextBox();
             SuspendLayout();
             // 
             // registerButton
             // 
-            registerButton.Location = new Point(470, 388);
+            registerButton.Anchor = AnchorStyles.None;
+            registerButton.ForeColor = SystemColors.ActiveCaptionText;
+            registerButton.Location = new Point(518, 506);
             registerButton.Name = "registerButton";
             registerButton.Size = new Size(120, 40);
             registerButton.TabIndex = 0;
@@ -52,20 +60,13 @@
             registerButton.UseVisualStyleBackColor = true;
             registerButton.Click += registerButton_Click;
             // 
-            // emailTxtBox
-            // 
-            emailTxtBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            emailTxtBox.Location = new Point(493, 72);
-            emailTxtBox.Name = "emailTxtBox";
-            emailTxtBox.Size = new Size(180, 34);
-            emailTxtBox.TabIndex = 1;
-            emailTxtBox.TextChanged += emailTxtBox_TextChanged;
-            // 
             // lblEmail
             // 
+            lblEmail.Anchor = AnchorStyles.None;
             lblEmail.AutoSize = true;
             lblEmail.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblEmail.Location = new Point(414, 75);
+            lblEmail.ForeColor = SystemColors.Control;
+            lblEmail.Location = new Point(434, 151);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(63, 28);
             lblEmail.TabIndex = 2;
@@ -73,112 +74,220 @@
             // 
             // lblPassword
             // 
+            lblPassword.Anchor = AnchorStyles.None;
             lblPassword.AutoSize = true;
             lblPassword.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblPassword.Location = new Point(379, 115);
+            lblPassword.ForeColor = SystemColors.Control;
+            lblPassword.Location = new Point(399, 191);
             lblPassword.Margin = new Padding(3);
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(97, 28);
             lblPassword.TabIndex = 4;
             lblPassword.Text = "Password:";
             // 
+            // lblName
+            // 
+            lblName.Anchor = AnchorStyles.None;
+            lblName.AutoSize = true;
+            lblName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lblName.ForeColor = SystemColors.Control;
+            lblName.Location = new Point(426, 231);
+            lblName.Margin = new Padding(3);
+            lblName.Name = "lblName";
+            lblName.Size = new Size(68, 28);
+            lblName.TabIndex = 6;
+            lblName.Text = "Name:";
+            // 
+            // addressLbl
+            // 
+            addressLbl.Anchor = AnchorStyles.None;
+            addressLbl.AutoSize = true;
+            addressLbl.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            addressLbl.ForeColor = SystemColors.Control;
+            addressLbl.Location = new Point(407, 271);
+            addressLbl.Margin = new Padding(3);
+            addressLbl.Name = "addressLbl";
+            addressLbl.Size = new Size(86, 28);
+            addressLbl.TabIndex = 8;
+            addressLbl.Text = "Address:";
+            // 
+            // lblTaxNumber
+            // 
+            lblTaxNumber.Anchor = AnchorStyles.None;
+            lblTaxNumber.AutoSize = true;
+            lblTaxNumber.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lblTaxNumber.ForeColor = SystemColors.Control;
+            lblTaxNumber.Location = new Point(373, 310);
+            lblTaxNumber.Margin = new Padding(3);
+            lblTaxNumber.Name = "lblTaxNumber";
+            lblTaxNumber.Size = new Size(120, 28);
+            lblTaxNumber.TabIndex = 10;
+            lblTaxNumber.Text = "Tax Number:";
+            // 
+            // LoginLinkLbl
+            // 
+            LoginLinkLbl.Anchor = AnchorStyles.None;
+            LoginLinkLbl.AutoSize = true;
+            LoginLinkLbl.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            LoginLinkLbl.LinkColor = Color.FromArgb(50, 150, 255);
+            LoginLinkLbl.Location = new Point(626, 463);
+            LoginLinkLbl.Name = "LoginLinkLbl";
+            LoginLinkLbl.Size = new Size(59, 25);
+            LoginLinkLbl.TabIndex = 13;
+            LoginLinkLbl.TabStop = true;
+            LoginLinkLbl.Text = "Login";
+            // 
+            // txtAccount
+            // 
+            txtAccount.Anchor = AnchorStyles.None;
+            txtAccount.AutoSize = true;
+            txtAccount.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            txtAccount.ForeColor = SystemColors.Control;
+            txtAccount.Location = new Point(403, 463);
+            txtAccount.Name = "txtAccount";
+            txtAccount.Size = new Size(228, 25);
+            txtAccount.TabIndex = 12;
+            txtAccount.Text = "Already have an account?";
+            // 
+            // failedTxtLbl
+            // 
+            failedTxtLbl.Anchor = AnchorStyles.None;
+            failedTxtLbl.AutoSize = true;
+            failedTxtLbl.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            failedTxtLbl.ForeColor = Color.Firebrick;
+            failedTxtLbl.Location = new Point(360, 575);
+            failedTxtLbl.Name = "failedTxtLbl";
+            failedTxtLbl.RightToLeft = RightToLeft.No;
+            failedTxtLbl.Size = new Size(409, 28);
+            failedTxtLbl.TabIndex = 14;
+            failedTxtLbl.Text = "Registration failed. Please check informations!";
+            failedTxtLbl.Visible = false;
+            // 
+            // lblPhone
+            // 
+            lblPhone.Anchor = AnchorStyles.None;
+            lblPhone.AutoSize = true;
+            lblPhone.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lblPhone.ForeColor = SystemColors.Control;
+            lblPhone.Location = new Point(420, 349);
+            lblPhone.Margin = new Padding(3);
+            lblPhone.Name = "lblPhone";
+            lblPhone.Size = new Size(71, 28);
+            lblPhone.TabIndex = 16;
+            lblPhone.Text = "Phone:";
+            // 
+            // checkBoxCustomer
+            // 
+            checkBoxCustomer.AutoSize = true;
+            checkBoxCustomer.Location = new Point(599, 397);
+            checkBoxCustomer.Name = "checkBoxCustomer";
+            checkBoxCustomer.Size = new Size(94, 24);
+            checkBoxCustomer.TabIndex = 17;
+            checkBoxCustomer.Text = "Customer";
+            checkBoxCustomer.UseVisualStyleBackColor = true;
+            checkBoxCustomer.CheckedChanged += checkBoxCustomer_CheckedChanged;
+            // 
+            // checkBoxSupplier
+            // 
+            checkBoxSupplier.AutoSize = true;
+            checkBoxSupplier.Location = new Point(485, 397);
+            checkBoxSupplier.Name = "checkBoxSupplier";
+            checkBoxSupplier.Size = new Size(86, 24);
+            checkBoxSupplier.TabIndex = 18;
+            checkBoxSupplier.Text = "Supplier";
+            checkBoxSupplier.UseVisualStyleBackColor = true;
+            checkBoxSupplier.CheckedChanged += checkBoxSupplier_CheckedChanged;
+            // 
+            // emailTxtBox
+            // 
+            emailTxtBox.Anchor = AnchorStyles.None;
+            emailTxtBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            emailTxtBox.Location = new Point(513, 145);
+            emailTxtBox.Name = "emailTxtBox";
+            emailTxtBox.Size = new Size(180, 34);
+            emailTxtBox.TabIndex = 19;
+            emailTxtBox.TextChanged += emailTxtBox_TextChanged_1;
+            // 
             // passwordTxtBox
             // 
+            passwordTxtBox.Anchor = AnchorStyles.None;
             passwordTxtBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            passwordTxtBox.Location = new Point(493, 112);
+            passwordTxtBox.Location = new Point(513, 187);
             passwordTxtBox.Name = "passwordTxtBox";
             passwordTxtBox.Size = new Size(180, 34);
-            passwordTxtBox.TabIndex = 3;
-            passwordTxtBox.TextChanged += passwordTxtBox_TextChanged;
+            passwordTxtBox.TabIndex = 20;
+            passwordTxtBox.UseSystemPasswordChar = true;
+            passwordTxtBox.TextChanged += passwordTxtBox_TextChanged_1;
             // 
-            // lblFirstName
+            // nameTxtBox
             // 
-            lblFirstName.AutoSize = true;
-            lblFirstName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblFirstName.Location = new Point(366, 155);
-            lblFirstName.Margin = new Padding(3);
-            lblFirstName.Name = "lblFirstName";
-            lblFirstName.Size = new Size(110, 28);
-            lblFirstName.TabIndex = 6;
-            lblFirstName.Text = "First Name:";
+            nameTxtBox.Anchor = AnchorStyles.None;
+            nameTxtBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            nameTxtBox.Location = new Point(513, 226);
+            nameTxtBox.Name = "nameTxtBox";
+            nameTxtBox.Size = new Size(180, 34);
+            nameTxtBox.TabIndex = 21;
+            nameTxtBox.TextChanged += nameTxtBox_TextChanged;
             // 
-            // firstNameTxtBox
+            // phoneTxtBox
             // 
-            firstNameTxtBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            firstNameTxtBox.Location = new Point(493, 152);
-            firstNameTxtBox.Name = "firstNameTxtBox";
-            firstNameTxtBox.Size = new Size(180, 34);
-            firstNameTxtBox.TabIndex = 5;
-            firstNameTxtBox.TextChanged += textBox2_TextChanged;
+            phoneTxtBox.Anchor = AnchorStyles.None;
+            phoneTxtBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            phoneTxtBox.Location = new Point(513, 343);
+            phoneTxtBox.MaxLength = 11;
+            phoneTxtBox.Name = "phoneTxtBox";
+            phoneTxtBox.Size = new Size(180, 34);
+            phoneTxtBox.TabIndex = 24;
+            phoneTxtBox.TextChanged += phoneTxtBox_TextChanged;
             // 
-            // lastNameLbl
+            // taxNumberTxtBox
             // 
-            lastNameLbl.AutoSize = true;
-            lastNameLbl.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lastNameLbl.Location = new Point(366, 195);
-            lastNameLbl.Margin = new Padding(3);
-            lastNameLbl.Name = "lastNameLbl";
-            lastNameLbl.Size = new Size(107, 28);
-            lastNameLbl.TabIndex = 8;
-            lastNameLbl.Text = "Last Name:";
+            taxNumberTxtBox.Anchor = AnchorStyles.None;
+            taxNumberTxtBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            taxNumberTxtBox.Location = new Point(513, 304);
+            taxNumberTxtBox.Name = "taxNumberTxtBox";
+            taxNumberTxtBox.Size = new Size(180, 34);
+            taxNumberTxtBox.TabIndex = 23;
+            taxNumberTxtBox.TextChanged += taxNumberTxtBox_TextChanged;
             // 
-            // lastNameTxtBox
+            // addressTxtBox
             // 
-            lastNameTxtBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lastNameTxtBox.Location = new Point(493, 192);
-            lastNameTxtBox.Name = "lastNameTxtBox";
-            lastNameTxtBox.Size = new Size(180, 34);
-            lastNameTxtBox.TabIndex = 7;
-            lastNameTxtBox.TextChanged += lastNameTxtBox_TextChanged;
-            // 
-            // lblIdentityNumber
-            // 
-            lblIdentityNumber.AutoSize = true;
-            lblIdentityNumber.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblIdentityNumber.Location = new Point(312, 235);
-            lblIdentityNumber.Margin = new Padding(3);
-            lblIdentityNumber.Name = "lblIdentityNumber";
-            lblIdentityNumber.Size = new Size(160, 28);
-            lblIdentityNumber.TabIndex = 10;
-            lblIdentityNumber.Text = "Identity Number:";
-            // 
-            // IdentityNumberTxtBox
-            // 
-            IdentityNumberTxtBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            IdentityNumberTxtBox.Location = new Point(493, 232);
-            IdentityNumberTxtBox.Name = "IdentityNumberTxtBox";
-            IdentityNumberTxtBox.Size = new Size(180, 34);
-            IdentityNumberTxtBox.TabIndex = 9;
-            IdentityNumberTxtBox.TextChanged += IdentityNumberTxtBox_TextChanged;
-            // 
-            // birthDatePicker
-            // 
-            birthDatePicker.CalendarFont = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            birthDatePicker.Location = new Point(366, 300);
-            birthDatePicker.Name = "birthDatePicker";
-            birthDatePicker.Size = new Size(307, 27);
-            birthDatePicker.TabIndex = 11;
-            birthDatePicker.ValueChanged += birthDatePicker_ValueChanged;
+            addressTxtBox.Anchor = AnchorStyles.None;
+            addressTxtBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            addressTxtBox.Location = new Point(513, 265);
+            addressTxtBox.Name = "addressTxtBox";
+            addressTxtBox.Size = new Size(180, 34);
+            addressTxtBox.TabIndex = 22;
+            addressTxtBox.TextChanged += addressTxtBox_TextChanged;
             // 
             // RegisterScreen
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1068, 624);
-            Controls.Add(birthDatePicker);
-            Controls.Add(lblIdentityNumber);
-            Controls.Add(IdentityNumberTxtBox);
-            Controls.Add(lastNameLbl);
-            Controls.Add(lastNameTxtBox);
-            Controls.Add(lblFirstName);
-            Controls.Add(firstNameTxtBox);
-            Controls.Add(lblPassword);
+            BackColor = Color.FromArgb(30, 30, 30);
+            ClientSize = new Size(1066, 712);
+            Controls.Add(phoneTxtBox);
+            Controls.Add(taxNumberTxtBox);
+            Controls.Add(addressTxtBox);
+            Controls.Add(nameTxtBox);
             Controls.Add(passwordTxtBox);
-            Controls.Add(lblEmail);
             Controls.Add(emailTxtBox);
+            Controls.Add(checkBoxSupplier);
+            Controls.Add(checkBoxCustomer);
+            Controls.Add(lblPhone);
+            Controls.Add(failedTxtLbl);
+            Controls.Add(LoginLinkLbl);
+            Controls.Add(txtAccount);
+            Controls.Add(lblTaxNumber);
+            Controls.Add(addressLbl);
+            Controls.Add(lblName);
+            Controls.Add(lblPassword);
+            Controls.Add(lblEmail);
             Controls.Add(registerButton);
+            ForeColor = SystemColors.Control;
             Name = "RegisterScreen";
             Text = "RegisterScreen";
+            Load += RegisterScreen_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -186,16 +295,22 @@
         #endregion
 
         private Button registerButton;
-        private TextBox emailTxtBox;
         private Label lblEmail;
         private Label lblPassword;
+        private Label lblName;
+        private Label addressLbl;
+        private Label lblTaxNumber;
+        private LinkLabel LoginLinkLbl;
+        private Label txtAccount;
+        private Label failedTxtLbl;
+        private Label lblPhone;
+        private CheckBox checkBoxCustomer;
+        private CheckBox checkBoxSupplier;
+        private TextBox emailTxtBox;
         private TextBox passwordTxtBox;
-        private Label lblFirstName;
-        private TextBox firstNameTxtBox;
-        private Label lastNameLbl;
-        private TextBox lastNameTxtBox;
-        private Label lblIdentityNumber;
-        private TextBox IdentityNumberTxtBox;
-        private DateTimePicker birthDatePicker;
+        private TextBox nameTxtBox;
+        private TextBox phoneTxtBox;
+        private TextBox taxNumberTxtBox;
+        private TextBox addressTxtBox;
     }
 }

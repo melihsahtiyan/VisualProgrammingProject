@@ -18,14 +18,14 @@ namespace Persistence.Contexts
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<Factory> Factories { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<CustomerRequests> CustomerRequests { get; set; }
+        public DbSet<Orders> Orders { get; set; }
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<WarehouseProducts> WarehouseProducts { get; set; }
 
-        public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
+        public BaseDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
-            Configuration = configuration;
         }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<WarehouseProducts>(e =>
@@ -40,16 +40,17 @@ namespace Persistence.Contexts
                 e.HasOne(x => x.Product).WithMany(x => x.WarehouseProducts).HasForeignKey(x => x.ProductId);
             });
 
-            modelBuilder.Entity<CustomerRequests>(e =>
+            modelBuilder.Entity<Orders>(e =>
             {
-                e.ToTable("CustomerRequests");
+                e.ToTable("Orders");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).HasColumnName("Id");
                 e.Property(x => x.CustomerFactoryId).HasColumnName("CustomerFactoryId");
+                e.Property(x => x.ManufacturingFactoryId).HasColumnName("ManufacturingFactoryId");
                 e.Property(x => x.ProductId).HasColumnName("ProductId");
                 e.Property(x => x.Quantity).HasColumnName("Quantity");
                 e.Property(x => x.Date).HasColumnName("Date");
-                e.HasOne(x => x.CustomerFactory).WithMany(x => x.CustomerRequests)
+                e.HasOne(x => x.CustomerFactory).WithMany(x => x.Orders)
                     .HasForeignKey(x => x.CustomerFactoryId);
                 e.HasOne(x => x.Product).WithMany(x => x.CustomerRequests).HasForeignKey(x => x.ProductId);
             });
@@ -57,14 +58,24 @@ namespace Persistence.Contexts
             modelBuilder.Entity<Factory>(e =>
             {
                 e.ToTable("Factories");
+                e.HasBaseType<User>();
+                e.Property(x => x.Phone).HasColumnName("Phone");
+                e.Property(x => x.TaxNumber).HasColumnName("TaxNumber");
+                e.Property(x => x.Address).HasColumnName("Address");
+                e.Property(x => x.IsCustomer).HasColumnName("IsCustomer");
+                e.Property(x => x.IsSupplier).HasColumnName("IsSupplier");
+            });
+
+            modelBuilder.Entity<User>(e =>
+            {
+                e.ToTable("Users");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).HasColumnName("Id");
                 e.Property(x => x.Name).HasColumnName("Name");
-                e.Property(x => x.Address).HasColumnName("Address");
-                e.Property(x => x.Phone).HasColumnName("Phone");
                 e.Property(x => x.Email).HasColumnName("Email");
-                e.Property(x => x.IsCustomer).HasColumnName("IsCustomer");
-                e.Property(x => x.IsSupplier).HasColumnName("IsSupplier");
+                e.Property(x => x.PasswordHash).HasColumnName("PasswordHash");
+                e.Property(x => x.PasswordSalt).HasColumnName("PasswordSalt");
+                e.Property(x => x.Status).HasColumnName("Status");
             });
 
             modelBuilder.Entity<Product>(e =>
@@ -75,19 +86,6 @@ namespace Persistence.Contexts
                 e.Property(x => x.Name).HasColumnName("Name");
                 e.Property(x => x.Price).HasColumnName("Price");
                 e.Property(x => x.Description).HasColumnName("Description");
-            });
-
-            modelBuilder.Entity<User>(e =>
-            {
-                e.ToTable("Users");
-                e.HasKey(x => x.Id);
-                e.Property(x => x.Id).HasColumnName("Id");
-                e.Property(x => x.FirstName).HasColumnName("FirstName");
-                e.Property(x => x.LastName).HasColumnName("LastName");
-                e.Property(x => x.Email).HasColumnName("Email");
-                e.Property(x => x.PasswordHash).HasColumnName("PasswordHash");
-                e.Property(x => x.PasswordSalt).HasColumnName("PasswordSalt");
-                e.Property(x => x.Status).HasColumnName("Status");
             });
 
             modelBuilder.Entity<UserOperationClaim>(e =>
@@ -127,4 +125,5 @@ namespace Persistence.Contexts
         }
 
     }
+
 }

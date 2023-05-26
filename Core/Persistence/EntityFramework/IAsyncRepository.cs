@@ -4,9 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Domain.Concrete;
 using Core.Persistence.Paging;
 using Microsoft.EntityFrameworkCore.Query;
+using Core.Domain.Concrete;
 
 namespace Core.Persistence.EntityFramework
 {

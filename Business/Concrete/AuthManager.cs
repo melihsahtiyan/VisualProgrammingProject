@@ -7,48 +7,64 @@ using Business.Abstract;
 using Business.Services;
 using Core.Domain.Concrete;
 using Core.Domain.Dtos;
+using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
+using Domain.Entities;
 
 namespace Business.Concrete
 {
     public class AuthManager : IAuthService
     {
         private readonly IUserRepository _userRepository;
-        public AuthManager(IUserRepository userRepository)
+        private readonly IFactoryRepository _factoryRepository;
+        public AuthManager(IUserRepository userRepository, IFactoryRepository factoryRepository)
         {
             _userRepository = userRepository;
+            _factoryRepository = factoryRepository;
         }
-        public void Register(UserForRegisterDto user)
+        public IResult Register(UserForRegisterDto user)
         {
-            var result = _userRepository.Get(u => u.Email == user.Email);
+            var result = _factoryRepository.Get(u => u.Email == user.Email);
             if (result == null)
             {
                 byte[] passwordHash, passwordSalt;
                 HashingHelper.CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
-                var userToAdd = new User
+                var factoryToAdd = new Factory
                 {
-                    Email = user.Email, 
-                    PasswordHash = passwordHash, 
+                    Name = user.Name,
+                    Email = user.Email,
+                    Address = user.Address,
+                    Phone = user.Phone,
+                    TaxNumber = user.TaxNumber,
+                    PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
-                    BirthDate = user.DateOfBirth, 
-                    IdentityNumber = user.IdentityNumber, 
-                    FirstName = user.FirstName,
-                    LastName = user.LastName, 
+                    IsCustomer = user.IsCustomer,
+                    IsSupplier = user.IsSupplier,
                     Status = true
                 };
-                _userRepository.Add(userToAdd);
+                _factoryRepository.Add(factoryToAdd);
+                return new SuccessResult("User registered");
             }
+            return new ErrorResult("User already exists");
         }
 
-        public async Task Login(UserForLoginDto user)
+        public IResult Login(UserForLoginDto user)
         {
-            byte[] passwordHash, passwordSalt;
-            var userToCheck = await _userRepository.GetAsync(u => u.Email == user.Email);
-            if (userToCheck != null)
+            var userToCheck = _userRepository.Get(u => u.Email == user.Email);
+
+            if (userToCheck == null)
             {
-                HashingHelper.VerifyPasswordHash(user.Password, userToCheck.PasswordHash, userToCheck.PasswordHash);
-                
+                return new ErrorResult("User not found");
             }
+
+            if (!HashingHelper.VerifyPasswordHash(user.Password, userToCheck.PasswordHash,
+                    userToCheck.PasswordSalt))
+            {
+                return new ErrorResult("Login failed");
+            }
+
+            return new SuccessResult("Login successful");
+
         }
     }
 }

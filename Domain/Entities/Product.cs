@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Domain.Concrete;
+using Domain.Entities;
 
 namespace Domain.Entities
 {
@@ -14,7 +15,7 @@ namespace Domain.Entities
         public decimal Price { get; set; }
         public decimal Weight { get; set; }
         public virtual ICollection<WarehouseProducts> WarehouseProducts { get; set; }
-        public virtual ICollection<CustomerRequests> CustomerRequests { get; set; }
+        public virtual ICollection<Orders> CustomerRequests { get; set; }
 
         public Product() {}
 

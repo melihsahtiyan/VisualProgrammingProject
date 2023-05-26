@@ -7,7 +7,6 @@ using System.Text;
 using Core.Domain.Concrete;
 using Core.Persistence.Dynamic;
 using Core.Persistence.Paging;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Query;
 
 namespace Core.Persistence.EntityFramework
@@ -45,6 +44,13 @@ namespace Core.Persistence.EntityFramework
             if (include != null) queryable = include(queryable);
             if (orderBy != null) return orderBy(queryable).ToPaginate(index, size);
             return queryable.ToPaginate(index, size);
+        }
+
+        public List<TEntity> GetAll(Expression<Func<TEntity, bool>>? predicate = null)
+        {
+            IQueryable<TEntity> queryable = Query();
+            if (predicate != null) queryable = queryable.Where(predicate);
+            return queryable.ToList();
         }
 
         public IPaginate<TEntity> GetListByDynamic(Dynamic.Dynamic dynamic,
