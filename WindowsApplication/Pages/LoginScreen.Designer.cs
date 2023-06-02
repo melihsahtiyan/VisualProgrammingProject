@@ -152,6 +152,7 @@
             Controls.Add(btnLogin);
             Name = "LoginScreen";
             Text = "LoginScreen";
+            Load += LoginScreen_Load;
             ResumeLayout(false);
             PerformLayout();
         }
