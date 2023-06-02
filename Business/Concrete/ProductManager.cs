@@ -37,6 +37,18 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(result);
         }
 
+        public IDataResult<List<Product>> GetAllByWarehouseId(int warehouseId)
+        {
+            var result = _productRepository.GetAllByWarehouseId(warehouseId);
+            return new SuccessDataResult<List<Product>>(result);
+        }
+
+        public IDataResult<Product> GetByName(string name)
+        {
+            var result = _productRepository.Get(p => p.Name == name);
+            return new SuccessDataResult<Product>(result);
+        }
+
         public Product GetById(int id)
         {
             return _productRepository.Get(p => p.Id == id);

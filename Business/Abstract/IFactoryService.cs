@@ -13,6 +13,7 @@ namespace Business.Abstract
         IDataResult<List<Factory>> GetAll();
         IDataResult<Factory> GetById(int id);
         IDataResult<Factory> GetByEmail(string email);
+        IDataResult<Factory> GetByName(string factoryName);
         IResult Add(Factory factory);
         IResult Update(Factory factory);
         IResult Delete(int id);

@@ -15,23 +15,24 @@ namespace WindowsApplication.Pages
 {
     public partial class MainMenuScreen : Form
     {
-        private readonly IUserService _userService;
         private readonly IProductService _productService;
         private readonly IFactoryService _factoryService;
         private readonly IOrdersService _ordersService;
         private readonly IWarehouseProductsService _warehouseProductsService;
+        private readonly IWarehouseService _warehouseService;
 
-        public MainMenuScreen(IUserService userService, IProductService productService, IFactoryService factoryService,
-            IOrdersService ordersService,IWarehouseProductsService warehouseProductsService)
+        public MainMenuScreen(IProductService productService, IFactoryService factoryService,
+            IOrdersService ordersService, IWarehouseProductsService warehouseProductsService,
+            IWarehouseService warehouseService)
         {
             InitializeComponent();
             lblWelcomeText.Text = "Welcome " + UserSession.Username;
-            _userService = userService;
             _productService = productService;
             _factoryService = factoryService;
             _ordersService = ordersService;
             _warehouseProductsService = warehouseProductsService;
             productPortfolioTextLabel.Text += _productService.GetAll().Data.Count;
+            _warehouseService = warehouseService;
         }
 
         private void MainMenuScreen_Load(object sender, EventArgs e)
@@ -46,7 +47,8 @@ namespace WindowsApplication.Pages
 
         private void productListButton_Click(object sender, EventArgs e)
         {
-            var screen = new ProductListScreen(_productService);
+            var screen = new ProductListScreen(_productService, _factoryService, _ordersService,
+                _warehouseProductsService, _warehouseService);
             this.Hide();
             screen.Show();
         }
@@ -58,14 +60,16 @@ namespace WindowsApplication.Pages
 
         private void btnOrderPage_Click(object sender, EventArgs e)
         {
-            var screen = new OrderScreen(_ordersService, _productService, _factoryService);
+            var screen = new OrderScreen(_ordersService, _productService, _factoryService, _warehouseProductsService,
+                _warehouseService);
             this.Hide();
             screen.Show();
         }
 
         private void stockListButton_Click(object sender, EventArgs e)
         {
-            var screen = new WarehouseStocksScreen(_warehouseProductsService);
+            var screen = new WarehouseStocksScreen(_warehouseProductsService, _productService, _factoryService,
+                _ordersService, _warehouseService);
             this.Hide();
             screen.Show();
         }

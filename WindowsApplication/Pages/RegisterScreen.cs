@@ -21,11 +21,12 @@ namespace WindowsApplication.Pages
         private readonly IFactoryService _factoryService;
         private readonly IOrdersService _ordersService;
         private readonly IWarehouseProductsService _warehouseProductsService;
+        private readonly IWarehouseService _warehouseService;
         private string ProductName;
 
         public RegisterScreen(IAuthService authService, IUserService userService,
             IProductService productService, IFactoryService factoryService, IOrdersService ordersService,
-            IWarehouseProductsService warehouseProductsService)
+            IWarehouseProductsService warehouseProductsService, IWarehouseService warehouseService)
         {
             _authService = authService;
             _userService = userService;
@@ -35,6 +36,7 @@ namespace WindowsApplication.Pages
             _warehouseProductsService = warehouseProductsService;
             InitializeComponent();
             _warehouseProductsService = warehouseProductsService;
+            _warehouseService = warehouseService;
         }
 
         private void registerButton_Click(object sender, EventArgs e)
@@ -49,7 +51,7 @@ namespace WindowsApplication.Pages
                 failedTxtLbl.Visible = false;
                 this.Hide();
                 LoginScreen screen = new LoginScreen(_authService, _userService,
-                    _productService, _factoryService, _ordersService,_warehouseProductsService);
+                    _productService, _factoryService, _ordersService,_warehouseProductsService, _warehouseService);
                 screen.Show();
             }
         }

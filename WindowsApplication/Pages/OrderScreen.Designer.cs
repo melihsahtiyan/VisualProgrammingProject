@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             orderDataGridView = new DataGridView();
-            lblFactoryText = new Label();
             Id = new DataGridViewTextBoxColumn();
             CustomerFactoryName = new DataGridViewTextBoxColumn();
             ManufaturerFactoryName = new DataGridViewTextBoxColumn();
             ProductName = new DataGridViewTextBoxColumn();
             Quantity = new DataGridViewTextBoxColumn();
+            lblFactoryText = new Label();
+            previousPageBtn = new Button();
             ((System.ComponentModel.ISupportInitialize)orderDataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -52,17 +53,6 @@
             orderDataGridView.Size = new Size(758, 410);
             orderDataGridView.TabIndex = 0;
             orderDataGridView.CellContentClick += orderDataGridView_CellContentClick;
-            // 
-            // lblFactoryText
-            // 
-            lblFactoryText.AutoSize = true;
-            lblFactoryText.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblFactoryText.ForeColor = SystemColors.Control;
-            lblFactoryText.Location = new Point(439, 59);
-            lblFactoryText.Name = "lblFactoryText";
-            lblFactoryText.Size = new Size(99, 28);
-            lblFactoryText.TabIndex = 1;
-            lblFactoryText.Text = "Orders of ";
             // 
             // Id
             // 
@@ -94,12 +84,36 @@
             Quantity.MinimumWidth = 6;
             Quantity.Name = "Quantity";
             // 
+            // lblFactoryText
+            // 
+            lblFactoryText.AutoSize = true;
+            lblFactoryText.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lblFactoryText.ForeColor = SystemColors.Control;
+            lblFactoryText.Location = new Point(439, 59);
+            lblFactoryText.Name = "lblFactoryText";
+            lblFactoryText.Size = new Size(99, 28);
+            lblFactoryText.TabIndex = 1;
+            lblFactoryText.Text = "Orders of ";
+            // 
+            // previousPageBtn
+            // 
+            previousPageBtn.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            previousPageBtn.ForeColor = SystemColors.ActiveCaptionText;
+            previousPageBtn.Location = new Point(60, 59);
+            previousPageBtn.Name = "previousPageBtn";
+            previousPageBtn.Size = new Size(41, 94);
+            previousPageBtn.TabIndex = 2;
+            previousPageBtn.Text = "<";
+            previousPageBtn.UseVisualStyleBackColor = true;
+            previousPageBtn.Click += previousPageBtn_Click;
+            // 
             // OrderScreen
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 30, 30);
             ClientSize = new Size(1248, 699);
+            Controls.Add(previousPageBtn);
             Controls.Add(lblFactoryText);
             Controls.Add(orderDataGridView);
             ForeColor = SystemColors.Control;
@@ -120,5 +134,6 @@
         private DataGridViewTextBoxColumn ManufaturerFactoryName;
         private DataGridViewTextBoxColumn ProductName;
         private DataGridViewTextBoxColumn Quantity;
+        private Button previousPageBtn;
     }
 }

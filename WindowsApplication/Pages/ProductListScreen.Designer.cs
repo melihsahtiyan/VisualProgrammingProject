@@ -34,6 +34,7 @@
             Description = new DataGridViewTextBoxColumn();
             Price = new DataGridViewTextBoxColumn();
             Weight = new DataGridViewTextBoxColumn();
+            previousPageBtn = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -81,16 +82,28 @@
             Weight.MinimumWidth = 6;
             Weight.Name = "Weight";
             // 
+            // previousPageBtn
+            // 
+            previousPageBtn.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            previousPageBtn.Location = new Point(43, 31);
+            previousPageBtn.Name = "previousPageBtn";
+            previousPageBtn.Size = new Size(41, 94);
+            previousPageBtn.TabIndex = 1;
+            previousPageBtn.Text = "<";
+            previousPageBtn.UseVisualStyleBackColor = true;
+            previousPageBtn.Click += previousPageBtn_Click;
+            // 
             // ProductListScreen
             // 
             AutoScaleDimensions = new SizeF(11F, 28F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 30, 30);
             ClientSize = new Size(1126, 717);
+            Controls.Add(previousPageBtn);
             Controls.Add(dataGridView1);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             ForeColor = SystemColors.ControlText;
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "ProductListScreen";
             Text = "ProductListScreen";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
@@ -105,5 +118,6 @@
         private DataGridViewTextBoxColumn Description;
         private DataGridViewTextBoxColumn Price;
         private DataGridViewTextBoxColumn Weight;
+        private Button previousPageBtn;
     }
 }

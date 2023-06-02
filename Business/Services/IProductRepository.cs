@@ -11,5 +11,6 @@ namespace Business.Services
 {
     public interface IProductRepository : IAsyncRepository<Product>, IRepository<Product>
     {
+        List<Product> GetAllByWarehouseId(int warehouseId);
     }
 }

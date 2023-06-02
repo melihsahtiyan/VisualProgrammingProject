@@ -28,6 +28,12 @@ namespace Business.Concrete
             return new SuccessDataResult<Factory>(result);
         }
 
+        public IDataResult<Factory> GetByName(string factoryName)
+        {
+            var result = factoryRepository.Get(f => f.Name == factoryName);
+            return new SuccessDataResult<Factory>(result);
+        }
+
         public IResult Add(Factory factory)
         {
             factoryRepository.Add(factory);

@@ -15,5 +15,12 @@ namespace Persistence.Repositories
         public ProductRepository(BaseDbContext context) : base(context)
         {
         }
+
+        public List<Product> GetAllByWarehouseId(int warehouseId)
+        {
+            var result = Context.WarehouseProducts.Where(wp => wp.WarehouseId == warehouseId)
+                .Select(wp => wp.Product).ToList();
+            return result;
+        }
     }
 }

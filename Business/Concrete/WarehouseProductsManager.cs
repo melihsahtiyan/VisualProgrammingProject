@@ -58,5 +58,47 @@ namespace Business.Concrete
             _warehouseProductsRepository.Delete(warehouseProducts);
             return new SuccessResult();
         }
+
+        public IDataResult<List<WarehouseProductsDetailDto>> GetWarehouseProductsDetailsByWarehouseId(int id)
+        {
+            return new SuccessDataResult<List<WarehouseProductsDetailDto>>(_warehouseProductsRepository
+                .GetWarehouseProductsDetailsByWarehouseId(id));
+        }
+
+        public IDataResult<List<WarehouseProductsDetailDto>> GetWarehouseProductsDetailsByProductId(int id)
+        {
+            return new SuccessDataResult<List<WarehouseProductsDetailDto>>(_warehouseProductsRepository
+                .GetWarehouseProductsDetailsByProductId(id));
+        }
+
+        public IDataResult<List<WarehouseProductsDetailDto>> GetWarehouseProductsDetailsByFactoryId(int id)
+        {
+            return new SuccessDataResult<List<WarehouseProductsDetailDto>>(_warehouseProductsRepository
+                .GetWarehouseProductsDetailsByFactoryId(id));
+        }
+
+        public IDataResult<List<WarehouseProducts>> GetAllByProductIdAndWarehouseIdAndFactoryId(int productId, int warehouseId, int factoryId)
+        {
+            return new SuccessDataResult<List<WarehouseProducts>>(_warehouseProductsRepository
+                .GetAllByProductIdAndWarehouseIdAndFactoryId(productId, warehouseId, factoryId));
+        }
+
+        public IDataResult<List<WarehouseProductsDetailDto>> GetAllDetailsByProductIdAndWarehouseIdAndFactoryId(int productId, int warehouseId, int factoryId)
+        {
+            return new SuccessDataResult<List<WarehouseProductsDetailDto>>(_warehouseProductsRepository
+                .GetAllDetailsByProductIdAndWarehouseIdAndFactoryId(productId, warehouseId, factoryId));
+        }
+
+        public IDataResult<List<WarehouseProductsDetailDto>> GetAllDetailsByProductIdAndFactoryId(int productId, int factoryId)
+        {
+            return new SuccessDataResult<List<WarehouseProductsDetailDto>>(_warehouseProductsRepository
+                .GetAllDetailsByProductIdAndFactoryId(productId, factoryId));
+        }
+
+        public IDataResult<int> GetTotalStockByFactoryIdAndProductId(int factoryId, int productId)
+        {
+            return new SuccessDataResult<int>(
+                _warehouseProductsRepository.GetTotalStockByFactoryIdAndProductId(factoryId, productId));
+        }
     }
 }

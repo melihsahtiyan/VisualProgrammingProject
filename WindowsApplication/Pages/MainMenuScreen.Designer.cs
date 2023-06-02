@@ -86,9 +86,9 @@
             productPortfolioTextLabel.ForeColor = SystemColors.Control;
             productPortfolioTextLabel.Location = new Point(71, 179);
             productPortfolioTextLabel.Name = "productPortfolioTextLabel";
-            productPortfolioTextLabel.Size = new Size(347, 28);
+            productPortfolioTextLabel.Size = new Size(302, 28);
             productPortfolioTextLabel.TabIndex = 4;
-            productPortfolioTextLabel.Text = "Number of Products in your portfolio: ";
+            productPortfolioTextLabel.Text = "Number of Products in portfolio: ";
             productPortfolioTextLabel.Click += productPortfolioTextLabel_Click;
             // 
             // MainMenuScreen

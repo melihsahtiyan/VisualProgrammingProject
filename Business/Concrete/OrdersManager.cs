@@ -18,13 +18,16 @@ namespace Business.Concrete
         private readonly IProductService _productService;
         private readonly IFactoryService _factoryService;
         private readonly IWarehouseService _warehouseService;
+        private readonly IWarehouseProductsService _warehouseProductsService;
 
         public OrdersManager(IOrdersRepository ordersRepository,
-            IUserService userService, IProductService productService)
+            IUserService userService, IProductService productService,
+            IWarehouseProductsService warehouseProductsService)
         {
             _ordersRepository = ordersRepository;
             _userService = userService;
             _productService = productService;
+            _warehouseProductsService = warehouseProductsService;
         }
 
         public IResult Add(Orders orders)
@@ -39,6 +42,15 @@ namespace Business.Concrete
             if (productToCheck == null)
             {
                 return new ErrorResult("Product not found!");
+            }
+
+            var stockToCheck =
+                _warehouseProductsService.GetTotalStockByFactoryIdAndProductId(orders.ManufacturingFactoryId,
+                    orders.ProductId);
+
+            if (stockToCheck.Data < orders.Quantity)
+            {
+                return new ErrorResult("Not enough stock!");
             }
 
             _ordersRepository.Add(orders);

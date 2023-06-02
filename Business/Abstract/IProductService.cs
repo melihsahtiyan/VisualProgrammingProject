@@ -14,6 +14,8 @@ namespace Business.Abstract
     {
         Task<IPaginate<Product>> GetAllAsyncByDynamic(DynamicQueryDto request);
         IDataResult<List<Product>> GetAll();
+        IDataResult<List<Product>> GetAllByWarehouseId(int warehouseId);
+        IDataResult<Product> GetByName(string name);
         Product GetById(int id);
         void AddAsync(Product product);
         void UpdateAsync(Product product);

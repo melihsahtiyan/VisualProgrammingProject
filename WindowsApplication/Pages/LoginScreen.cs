@@ -21,10 +21,11 @@ namespace WindowsApplication.Pages
         private readonly IFactoryService _factoryService;
         private readonly IOrdersService _ordersService;
         private readonly IWarehouseProductsService _warehouseProductsService;
+        private readonly IWarehouseService _warehouseService;
 
         public LoginScreen(IAuthService authService, IUserService userService,
             IProductService productService, IFactoryService factoryService, IOrdersService ordersService,
-            IWarehouseProductsService warehouseProductsService)
+            IWarehouseProductsService warehouseProductsService, IWarehouseService warehouseService)
         {
             _authService = authService;
             _userService = userService;
@@ -32,6 +33,7 @@ namespace WindowsApplication.Pages
             _factoryService = factoryService;
             _ordersService = ordersService;
             _warehouseProductsService = warehouseProductsService;
+            _warehouseService = warehouseService;
             InitializeComponent();
         }
 
@@ -48,8 +50,8 @@ namespace WindowsApplication.Pages
                 UserSession.Username = _userService.GetByEmail(_userForLoginDto.Email).Data.Name;
                 failedTxtLbl.Visible = false;
                 this.Hide();
-                MainMenuScreen screen = new MainMenuScreen( _userService, 
-                    _productService, _factoryService, _ordersService,_warehouseProductsService);
+                MainMenuScreen screen = new MainMenuScreen(
+                    _productService, _factoryService, _ordersService, _warehouseProductsService, _warehouseService);
                 screen.Show();
             }
         }
@@ -67,7 +69,7 @@ namespace WindowsApplication.Pages
         private void RegisterLinkLbl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             RegisterScreen screen = new RegisterScreen(_authService, _userService,
-                _productService, _factoryService, _ordersService, _warehouseProductsService);
+                _productService, _factoryService, _ordersService, _warehouseProductsService, _warehouseService);
             this.Hide();
             screen.Show();
         }

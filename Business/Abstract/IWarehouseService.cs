@@ -12,6 +12,11 @@ namespace Business.Abstract
     {
         IDataResult<List<Warehouse>> GetAll();
         IDataResult<Warehouse> GetById(int id);
+        IDataResult<List<Warehouse>> GetAllByFactoryId(int id);
+        IDataResult<List<Warehouse>> GetAllByFactoryIdAndWarehouseId(int factoryId, int warehouseId);
+        IDataResult<List<Warehouse>> GetAllByWarehouseId(int id);
+        IDataResult<List<Warehouse>> GetAllByFactoryName(string factoryName);
+        IDataResult<Warehouse> GetAllByWarehouseName(string warehouseName);
         IResult Add(Warehouse warehouse);
         IResult Update(Warehouse warehouse);
         IResult Delete(Warehouse warehouse);
