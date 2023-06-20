@@ -7,21 +7,21 @@ using Core.Domain.Abstract;
 
 namespace Domain.Dtos
 {
-    public class OrderDetailDto : IDto
+    public class OrdersForCreateDto : IDto
     {
         public int Id { get; set; }
-        public string CustomerFactoryName { get; set; }
-        public string ManufacturerFactoryName { get; set; }
-        public string ProductName { get; set; }
+        public int CustomerFactoryId { get; set; }
+        public int ManufacturingFactoryId { get; set; }
+        public int ProductId { get; set; }
         public int Quantity { get; set; }
         public DateTime DateOfOrder { get; set; }
         public DateTime? EstimatedDepartureDate { get; set; }
         public DateTime? DepartureDate { get; set; }
         public DateTime? EstimatedDeliveryDate { get; set; }
         public DateTime? DeliveryDate { get; set; }
-        public string FromWhere { get; set; }
-        public string ToWhere { get; set; }
-        public bool ApprovedByCustomer { get; set; }
-        public bool ApprovedByManufacturer { get; set; }
+        public int ManufacturerWarehouseId { get; set; }
+        public int CustomerWarehouseId { get; set; }
+        public bool ApprovedByCustomer = false;
+        public bool ApprovedByManufacturer = false;
     }
 }

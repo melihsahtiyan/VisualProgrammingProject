@@ -14,8 +14,6 @@ namespace Persistence.Contexts
     {
         protected IConfiguration Configuration { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
-        public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<Factory> Factories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Orders> Orders { get; set; }
@@ -25,7 +23,7 @@ namespace Persistence.Contexts
         public BaseDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
         }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<WarehouseProducts>(e =>
@@ -45,13 +43,23 @@ namespace Persistence.Contexts
                 e.ToTable("Orders");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).HasColumnName("Id");
-                e.Property(x => x.CustomerFactoryId).HasColumnName("CustomerFactoryId");
+                e.Property(x => x.CustomerFactoryId).HasColumnName("CustomerFactoryId");    
                 e.Property(x => x.ManufacturingFactoryId).HasColumnName("ManufacturingFactoryId");
                 e.Property(x => x.ProductId).HasColumnName("ProductId");
                 e.Property(x => x.Quantity).HasColumnName("Quantity");
-                e.Property(x => x.Date).HasColumnName("Date");
+                e.Property(x => x.DateOfOrder).HasColumnName("DateOfOrder");
+                e.Property(x => x.EstimatedDeliveryDate).HasColumnName("EstimatedDeliveryDate");
+                e.Property(x => x.DeliveryDate).HasColumnName("DeliveryDate");
+                e.Property(x => x.EstimatedDepartureDate).HasColumnName("EstimatedDepartureDate");
+                e.Property(x => x.DepartureDate).HasColumnName("DepartureDate");
+                e.Property(x => x.ApprovedByCustomer).HasColumnName("ApprovedByCustomer");
+                e.Property(x => x.ApprovedByManufacturer).HasColumnName("ApprovedByManufacturer");
+                e.Property(x => x.IsCanceled).HasColumnName("IsCanceled");
+                e.Property(x => x.ManufacturerWarehouseId).HasColumnName("ManufacturerWarehouseId");
+                e.Property(x => x.CustomerWarehouseId).HasColumnName("CustomerWarehouseId");
                 e.HasOne(x => x.CustomerFactory).WithMany(x => x.Orders)
                     .HasForeignKey(x => x.CustomerFactoryId);
+                e.HasOne(x => x.CustomerWarehouse).WithMany(x => x.Orders).HasForeignKey(x => x.CustomerWarehouseId);
                 e.HasOne(x => x.Product).WithMany(x => x.CustomerRequests).HasForeignKey(x => x.ProductId);
             });
 
@@ -61,9 +69,10 @@ namespace Persistence.Contexts
                 e.HasBaseType<User>();
                 e.Property(x => x.Phone).HasColumnName("Phone");
                 e.Property(x => x.TaxNumber).HasColumnName("TaxNumber");
-                e.Property(x => x.Address).HasColumnName("Address");
+                e.Property(x => x.Country).HasColumnName("Country");
                 e.Property(x => x.IsCustomer).HasColumnName("IsCustomer");
                 e.Property(x => x.IsSupplier).HasColumnName("IsSupplier");
+                e.Property(x => x.TradeGrade).HasColumnName("TradeGrade");
             });
 
             modelBuilder.Entity<User>(e =>
@@ -85,27 +94,9 @@ namespace Persistence.Contexts
                 e.Property(x => x.Id).HasColumnName("Id");
                 e.Property(x => x.Name).HasColumnName("Name");
                 e.Property(x => x.Price).HasColumnName("Price");
+                e.Property(p => p.Weight).HasColumnName("Weight");
+                e.Property(p => p.Volume).HasColumnName("Volume");
                 e.Property(x => x.Description).HasColumnName("Description");
-            });
-
-            modelBuilder.Entity<UserOperationClaim>(e =>
-            {
-                e.ToTable("UserOperationClaims");
-                e.HasKey(x => x.Id);
-                e.Property(x => x.Id).HasColumnName("Id");
-                e.Property(x => x.UserId).HasColumnName("UserId");
-                e.Property(x => x.OperationClaimId).HasColumnName("OperationClaimId");
-                e.HasOne(x => x.User).WithMany(x => x.UserOperationClaims).HasForeignKey(x => x.UserId);
-                e.HasOne(x => x.OperationClaim).WithMany(x => x.UserOperationClaims)
-                    .HasForeignKey(x => x.OperationClaimId);
-            });
-
-            modelBuilder.Entity<OperationClaim>(e =>
-            {
-                e.ToTable("OperationClaims");
-                e.HasKey(x => x.Id);
-                e.Property(x => x.Id).HasColumnName("Id");
-                e.Property(x => x.OperationClaimName).HasColumnName("OperationClaimName");
             });
 
             modelBuilder.Entity<Warehouse>(e =>
@@ -115,6 +106,7 @@ namespace Persistence.Contexts
                 e.Property(x => x.Id).HasColumnName("Id");
                 e.Property(x => x.Name).HasColumnName("Name");
                 e.Property(x => x.Address).HasColumnName("Address");
+                e.Property(w => w.City).HasColumnName("City");
                 e.Property(x => x.Phone).HasColumnName("Phone");
                 e.Property(x => x.Email).HasColumnName("Email");
                 e.Property(x => x.FactoryId).HasColumnName("FactoryId");

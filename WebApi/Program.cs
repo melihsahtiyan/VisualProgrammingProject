@@ -3,7 +3,6 @@ using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
-using Core.Utilities.Security.JWT;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence;
@@ -19,8 +18,6 @@ builder.Services.AddPersistenceServices();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddDependencyResolvers(new ICoreModule[] { new CoreModule() });
-
-TokenOptions? tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
 
 builder.Services.AddSwaggerGen(opt =>

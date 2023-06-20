@@ -33,7 +33,7 @@ namespace Business.Concrete
                 {
                     Name = user.Name,
                     Email = user.Email,
-                    Address = user.Address,
+                    Country = user.Country,
                     Phone = user.Phone,
                     TaxNumber = user.TaxNumber,
                     PasswordHash = passwordHash,
@@ -46,6 +46,19 @@ namespace Business.Concrete
                 return new SuccessResult("User registered");
             }
             return new ErrorResult("User already exists");
+        }
+
+        public IResult RegisterList(List<UserForRegisterDto> users)
+        {
+            foreach (var user in users)
+            {
+                var result = Register(user);
+                if (!result.Success)
+                {
+                    return new ErrorResult("Users not registered");
+                }
+            }
+            return new SuccessResult("Users registered");
         }
 
         public IResult Login(UserForLoginDto user)

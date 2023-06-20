@@ -11,9 +11,14 @@ namespace Business.Abstract
 {
     public interface IOrdersService
     {
-        IResult Add(Orders orders);
+        IResult Add(OrdersForCreateDto orders);
+        IResult AddRange(List<OrdersForCreateDto> orders);
         IResult Update(Orders orders);
         IResult Delete(Orders orders);
+        IResult ApproveOrderByManufacturer(int orderId, DateTime estimatedDepartureDate, DateTime estimatedDeliveryDate);
+        IResult DepartOrderByManufacturer(int orderId, DateTime? estimatedDeliveryDate);
+        IResult ApproveOrderByCustomer(int orderId);
+        IResult CancelOrderByManufacturer(int orderId, int factoryId);
         IDataResult<Orders> GetById(int id);
         IDataResult<List<Orders>> GetAll();
         IDataResult<List<Orders>> GetByUserId(int userId);

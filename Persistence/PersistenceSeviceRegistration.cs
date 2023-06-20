@@ -25,8 +25,6 @@ namespace Persistence
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IWarehouseProductsRepository, WarehouseProductsRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserOperationClaimRepository, UserOperationClaimRepository>();
-            services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
             services.AddScoped<IOrdersRepository, OrdersRepository>();
             return services;
         }

@@ -60,8 +60,8 @@ namespace WindowsApplication.Pages
 
         private void btnOrderPage_Click(object sender, EventArgs e)
         {
-            var screen = new OrderScreen(_ordersService, _productService, _factoryService, _warehouseProductsService,
-                _warehouseService);
+            var screen = new OrderScreen(_factoryService, _warehouseProductsService, _warehouseService, _ordersService,
+                _productService);
             this.Hide();
             screen.Show();
         }

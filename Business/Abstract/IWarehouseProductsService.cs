@@ -14,8 +14,9 @@ namespace Business.Abstract
         IDataResult<List<WarehouseProducts>> GetAll();
         IDataResult<List<WarehouseProductsDetailDto>> GetWarehouseProductsDetails();
         IDataResult<WarehouseProducts> GetById(int id);
-        IResult Add(WarehouseProducts warehouseProducts);
-        IResult Update(WarehouseProducts warehouseProducts);
+        IResult Add(WarehouseProductsForCreateDto warehouseProducts);
+        IResult AddRange(List<WarehouseProductsForCreateDto> warehouseProducts);
+        IResult Update(WarehouseProductsForCreateDto warehouseProducts);
         IResult Delete(WarehouseProducts warehouseProducts);
         IDataResult<List<WarehouseProductsDetailDto>> GetWarehouseProductsDetailsByWarehouseId(int id);
         IDataResult<List<WarehouseProductsDetailDto>> GetWarehouseProductsDetailsByProductId(int id);

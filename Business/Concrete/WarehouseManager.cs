@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Services;
 using Core.Utilities.Results;
+using Domain.Dtos;
 using Domain.Entities;
 
 namespace Business.Concrete
@@ -59,15 +60,49 @@ namespace Business.Concrete
             return new SuccessDataResult<Warehouse>(result);
         }
 
-        public IResult Add(Warehouse warehouse)
+        public IResult Add(WarehouseForCreateDto warehouse)
         {
-            _warehouseRepository.Add(warehouse);
+            var result = new Warehouse
+            {
+                Name = warehouse.Name,
+                Address = warehouse.Address,
+                Phone = warehouse.Phone,
+                Email = warehouse.Email,
+                FactoryId = warehouse.FactoryId
+            };
+            _warehouseRepository.Add(result);
             return new SuccessResult("Warehouse added!");
         }
 
-        public IResult Update(Warehouse warehouse)
+        public IResult AddRange(List<WarehouseForCreateDto> warehouses)
         {
-            _warehouseRepository.Update(warehouse);
+            foreach (var warehouse in warehouses)
+            {
+                var result = Add(warehouse);
+                if (!result.Success)
+                {
+                    return new ErrorResult("Warehouse could not be added!");
+                }
+            }
+            return new SuccessResult("Warehouses added!");
+        }
+
+        public IResult Update(WarehouseForCreateDto warehouse)
+        {
+            var result = GetById(warehouse.Id).Data;
+
+            if (result == null)
+            {
+                return new ErrorResult("Warehouse could not be found!");
+            }
+
+            result.Name = warehouse.Name;
+            result.Address = warehouse.Address;
+            result.Phone = warehouse.Phone;
+            result.Email = warehouse.Email;
+            result.FactoryId = warehouse.FactoryId;
+
+            _warehouseRepository.Update(result);
             return new SuccessResult("Warehouse updated!");
         }
 

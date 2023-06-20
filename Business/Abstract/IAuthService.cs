@@ -11,6 +11,7 @@ namespace Business.Abstract
     public interface IAuthService
     {
         IResult Register(UserForRegisterDto user);
+        IResult RegisterList(List<UserForRegisterDto> users);
         IResult Login(UserForLoginDto user);
     }
 }

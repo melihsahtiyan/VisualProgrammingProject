@@ -40,11 +40,16 @@
             previousPageBtn = new Button();
             label1 = new Label();
             warehouseComboBox = new ComboBox();
-            factoryComboBox = new ComboBox();
             productsComboBox = new ComboBox();
-            quantityTextBox = new TextBox();
             addBtn = new Button();
+            warehouseLbl = new Label();
+            productLabel = new Label();
+            quantityLabel = new Label();
+            addStockPanel = new Panel();
+            label2 = new Label();
+            quantityTextBox = new MaskedTextBox();
             ((System.ComponentModel.ISupportInitialize)warehouseProductsDataGridView).BeginInit();
+            addStockPanel.SuspendLayout();
             SuspendLayout();
             // 
             // warehouseProductsDataGridView
@@ -53,11 +58,11 @@
             warehouseProductsDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             warehouseProductsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             warehouseProductsDataGridView.Columns.AddRange(new DataGridViewColumn[] { Id, WarehouseName, Address, Phone, ProductName, ProductDescription, Price, Quantity });
-            warehouseProductsDataGridView.Location = new Point(75, 312);
+            warehouseProductsDataGridView.Location = new Point(75, 178);
             warehouseProductsDataGridView.Name = "warehouseProductsDataGridView";
             warehouseProductsDataGridView.RowHeadersWidth = 51;
             warehouseProductsDataGridView.RowTemplate.Height = 29;
-            warehouseProductsDataGridView.Size = new Size(1391, 462);
+            warehouseProductsDataGridView.Size = new Size(1221, 777);
             warehouseProductsDataGridView.TabIndex = 0;
             // 
             // Id
@@ -129,48 +134,32 @@
             label1.Size = new Size(127, 50);
             label1.TabIndex = 3;
             label1.Text = "Stocks";
+            label1.Click += label1_Click;
             // 
             // warehouseComboBox
             // 
-            warehouseComboBox.Enabled = false;
+            warehouseComboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             warehouseComboBox.FormattingEnabled = true;
-            warehouseComboBox.Location = new Point(486, 176);
+            warehouseComboBox.Location = new Point(158, 292);
             warehouseComboBox.Name = "warehouseComboBox";
-            warehouseComboBox.Size = new Size(174, 36);
+            warehouseComboBox.Size = new Size(284, 36);
             warehouseComboBox.TabIndex = 4;
             warehouseComboBox.SelectedIndexChanged += warehouseComboBox_SelectedIndexChanged;
             // 
-            // factoryComboBox
-            // 
-            factoryComboBox.FormattingEnabled = true;
-            factoryComboBox.Location = new Point(289, 176);
-            factoryComboBox.Name = "factoryComboBox";
-            factoryComboBox.Size = new Size(174, 36);
-            factoryComboBox.TabIndex = 5;
-            factoryComboBox.SelectedIndexChanged += factoryComboBox_SelectedIndexChanged;
-            // 
             // productsComboBox
             // 
+            productsComboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             productsComboBox.Enabled = false;
             productsComboBox.FormattingEnabled = true;
-            productsComboBox.Location = new Point(685, 176);
+            productsComboBox.Location = new Point(158, 354);
             productsComboBox.Name = "productsComboBox";
-            productsComboBox.Size = new Size(174, 36);
+            productsComboBox.Size = new Size(284, 36);
             productsComboBox.TabIndex = 6;
             productsComboBox.SelectedIndexChanged += productsComboBox_SelectedIndexChanged;
             // 
-            // quantityTextBox
-            // 
-            quantityTextBox.Enabled = false;
-            quantityTextBox.Location = new Point(886, 176);
-            quantityTextBox.Name = "quantityTextBox";
-            quantityTextBox.Size = new Size(174, 34);
-            quantityTextBox.TabIndex = 7;
-            quantityTextBox.TextChanged += quantityTextBox_TextChanged;
-            // 
             // addBtn
             // 
-            addBtn.Location = new Point(1125, 176);
+            addBtn.Location = new Point(175, 508);
             addBtn.Name = "addBtn";
             addBtn.Size = new Size(118, 36);
             addBtn.TabIndex = 8;
@@ -178,17 +167,85 @@
             addBtn.UseVisualStyleBackColor = true;
             addBtn.Click += addBtn_Click;
             // 
+            // warehouseLbl
+            // 
+            warehouseLbl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            warehouseLbl.AutoSize = true;
+            warehouseLbl.ForeColor = SystemColors.Control;
+            warehouseLbl.Location = new Point(41, 292);
+            warehouseLbl.Name = "warehouseLbl";
+            warehouseLbl.Size = new Size(118, 28);
+            warehouseLbl.TabIndex = 9;
+            warehouseLbl.Text = "Warehouse: ";
+            // 
+            // productLabel
+            // 
+            productLabel.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            productLabel.AutoSize = true;
+            productLabel.ForeColor = SystemColors.Control;
+            productLabel.Location = new Point(41, 351);
+            productLabel.Name = "productLabel";
+            productLabel.Size = new Size(90, 28);
+            productLabel.TabIndex = 10;
+            productLabel.Text = "Product: ";
+            // 
+            // quantityLabel
+            // 
+            quantityLabel.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            quantityLabel.AutoSize = true;
+            quantityLabel.ForeColor = SystemColors.Control;
+            quantityLabel.Location = new Point(41, 420);
+            quantityLabel.Name = "quantityLabel";
+            quantityLabel.Size = new Size(97, 28);
+            quantityLabel.TabIndex = 11;
+            quantityLabel.Text = "Quantity: ";
+            // 
+            // addStockPanel
+            // 
+            addStockPanel.BackColor = Color.FromArgb(64, 64, 64);
+            addStockPanel.Controls.Add(quantityTextBox);
+            addStockPanel.Controls.Add(label2);
+            addStockPanel.Controls.Add(warehouseComboBox);
+            addStockPanel.Controls.Add(addBtn);
+            addStockPanel.Controls.Add(quantityLabel);
+            addStockPanel.Controls.Add(productsComboBox);
+            addStockPanel.Controls.Add(productLabel);
+            addStockPanel.Controls.Add(warehouseLbl);
+            addStockPanel.Location = new Point(1360, 178);
+            addStockPanel.Name = "addStockPanel";
+            addStockPanel.Size = new Size(486, 777);
+            addStockPanel.TabIndex = 12;
+            // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Semibold", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.ForeColor = SystemColors.Control;
+            label2.Location = new Point(80, 110);
+            label2.Name = "label2";
+            label2.Size = new Size(337, 38);
+            label2.TabIndex = 12;
+            label2.Text = "Add stock to warehouses";
+            // 
+            // quantityTextBox
+            // 
+            quantityTextBox.Location = new Point(158, 420);
+            quantityTextBox.Mask = "00000";
+            quantityTextBox.Name = "quantityTextBox";
+            quantityTextBox.PromptChar = ' ';
+            quantityTextBox.Size = new Size(284, 34);
+            quantityTextBox.TabIndex = 13;
+            quantityTextBox.ValidatingType = typeof(int);
+            quantityTextBox.MaskInputRejected += quantityTextBox_MaskInputRejected;
+            // 
             // WarehouseStocksScreen
             // 
             AutoScaleDimensions = new SizeF(11F, 28F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 30, 30);
-            ClientSize = new Size(1546, 878);
-            Controls.Add(addBtn);
-            Controls.Add(quantityTextBox);
-            Controls.Add(productsComboBox);
-            Controls.Add(factoryComboBox);
-            Controls.Add(warehouseComboBox);
+            ClientSize = new Size(1902, 1033);
+            Controls.Add(addStockPanel);
             Controls.Add(label1);
             Controls.Add(previousPageBtn);
             Controls.Add(warehouseProductsDataGridView);
@@ -198,6 +255,8 @@
             Text = "WarehouseStocksScreen";
             Load += WarehouseStocksScreen_Load;
             ((System.ComponentModel.ISupportInitialize)warehouseProductsDataGridView).EndInit();
+            addStockPanel.ResumeLayout(false);
+            addStockPanel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -216,9 +275,13 @@
         private Button previousPageBtn;
         private Label label1;
         private ComboBox warehouseComboBox;
-        private ComboBox factoryComboBox;
         private ComboBox productsComboBox;
-        private TextBox quantityTextBox;
         private Button addBtn;
+        private Label warehouseLbl;
+        private Label productLabel;
+        private Label quantityLabel;
+        private Panel addStockPanel;
+        private Label label2;
+        private MaskedTextBox quantityTextBox;
     }
 }

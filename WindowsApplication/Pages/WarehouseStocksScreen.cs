@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Business.Abstract;
+using Domain.Dtos;
 using Domain.Entities;
 using Int32 = System.Int32;
 
@@ -22,7 +23,7 @@ namespace WindowsApplication.Pages
         private readonly IWarehouseProductsService _warehouseProductsService;
 
         public WarehouseProducts warehouseProducts = new WarehouseProducts();
-        string factoryName { get; set; }
+        private string factoryName = UserSession.Username;
         string warehouseName { get; set; }
         string productName { get; set; }
 
@@ -36,20 +37,7 @@ namespace WindowsApplication.Pages
             _factoryService = factoryService;
             _orderService = orderService;
 
-            var warehouseProducts = _warehouseProductsService.GetWarehouseProductsDetails().Data;
-            foreach (var warehouseProduct in warehouseProducts)
-            {
-                warehouseProductsDataGridView.Rows.Add(warehouseProduct.Id, warehouseProduct.WarehouseName,
-                    warehouseProduct.Address, warehouseProduct.Phone, warehouseProduct.ProductName,
-                    warehouseProduct.ProductDescription,
-                    warehouseProduct.Price, warehouseProduct.Quantity);
-            }
-            var factories = _factoryService.GetAll().Data;
-            foreach (var factory in factories)
-            {
-                if (factory.IsSupplier)
-                    factoryComboBox.Items.Add(factory.Name);
-            }
+            FillTheTableWithStocks();
         }
 
         private void WarehouseStocksScreen_Load(object sender, EventArgs e)
@@ -71,22 +59,12 @@ namespace WindowsApplication.Pages
             warehouseName = warehouseComboBox.SelectedItem.ToString();
             warehouseProducts.WarehouseId = _warehouseService.GetAllByWarehouseName(warehouseName).Data.Id;
             var products = _productService.GetAll().Data;
+            productsComboBox.Items.Clear();
             foreach (var product in products)
             {
                 productsComboBox.Items.Add(product.Name);
             }
             productsComboBox.Enabled = true;
-        }
-
-        private void factoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            factoryName = factoryComboBox.SelectedItem.ToString();
-            var warehouses = _warehouseService.GetAllByFactoryName(factoryName).Data;
-            foreach (var warehouse in warehouses)
-            {
-                warehouseComboBox.Items.Add(warehouse.Name);
-            }
-            warehouseComboBox.Enabled = true;
         }
 
         private void productsComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -98,17 +76,63 @@ namespace WindowsApplication.Pages
 
         private void quantityTextBox_TextChanged(object sender, EventArgs e)
         {
-            var quantity = Int32.Parse(quantityTextBox.Text);
-            if (quantity > 0)
+            var keyPressEvent = e as KeyPressEventArgs;
+            if (keyPressEvent != null)
             {
-                addBtn.Enabled = true;
-                warehouseProducts.Quantity = quantity;
+                if (!char.IsControl(keyPressEvent.KeyChar) && !char.IsDigit(keyPressEvent.KeyChar))
+                {
+                    var quantity = Int32.Parse(quantityTextBox.Text);
+                    if (quantity > 0)
+                    {
+                        addBtn.Enabled = true;
+                        warehouseProducts.Quantity = quantity;
+                    }
+                }
             }
+        }
+
+        private void quantityTextBox_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+            warehouseProducts.Quantity = Int32.Parse(quantityTextBox.Text);
         }
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-            _warehouseProductsService.Add(warehouseProducts);
+            var result = new WarehouseProductsForCreateDto()
+            {
+                WarehouseId = warehouseProducts.WarehouseId,
+                ProductId = warehouseProducts.ProductId,
+                Quantity = warehouseProducts.Quantity
+            };
+
+            _warehouseProductsService.Add(result);
+
+            FillTheTableWithStocks();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+        void FillTheTableWithStocks()
+        {
+            warehouseProductsDataGridView.Rows.Clear();
+            var warehouseProducts = _warehouseProductsService.GetWarehouseProductsDetails().Data;
+            foreach (var warehouseProduct in warehouseProducts)
+            {
+                warehouseProductsDataGridView.Rows.Add(warehouseProduct.Id, warehouseProduct.WarehouseName,
+                    warehouseProduct.Address, warehouseProduct.Phone, warehouseProduct.ProductName,
+                    warehouseProduct.ProductDescription,
+                    warehouseProduct.Price, warehouseProduct.Quantity);
+            }
+
+            warehouseComboBox.Items.Clear();
+
+            var warehouses = _warehouseService.GetAllByFactoryName(factoryName);
+            foreach (var warehouse in warehouses.Data)
+            {
+                warehouseComboBox.Items.Add(warehouse.Name);
+            }
         }
     }
 }

@@ -28,112 +28,73 @@
         /// </summary>
         private void InitializeComponent()
         {
-            orderDataGridView = new DataGridView();
-            Id = new DataGridViewTextBoxColumn();
-            CustomerFactoryName = new DataGridViewTextBoxColumn();
-            ManufaturerFactoryName = new DataGridViewTextBoxColumn();
-            ProductName = new DataGridViewTextBoxColumn();
-            Quantity = new DataGridViewTextBoxColumn();
-            lblFactoryText = new Label();
-            previousPageBtn = new Button();
-            ((System.ComponentModel.ISupportInitialize)orderDataGridView).BeginInit();
+            label1 = new Label();
+            orderListScreenButton = new Button();
+            approveOrderButton = new Button();
+            cancelOrderButton = new Button();
             SuspendLayout();
             // 
-            // orderDataGridView
+            // label1
             // 
-            orderDataGridView.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            orderDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            orderDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            orderDataGridView.Columns.AddRange(new DataGridViewColumn[] { Id, CustomerFactoryName, ManufaturerFactoryName, ProductName, Quantity });
-            orderDataGridView.Location = new Point(256, 215);
-            orderDataGridView.Margin = new Padding(6);
-            orderDataGridView.Name = "orderDataGridView";
-            orderDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            orderDataGridView.RowTemplate.Height = 29;
-            orderDataGridView.Size = new Size(758, 410);
-            orderDataGridView.TabIndex = 0;
-            orderDataGridView.CellContentClick += orderDataGridView_CellContentClick;
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.ForeColor = SystemColors.Control;
+            label1.Location = new Point(568, 45);
+            label1.Name = "label1";
+            label1.Size = new Size(931, 82);
+            label1.TabIndex = 0;
+            label1.Text = "Welcome to the Order screen\r\nYou can order someting, or approve your order, or cancel your order.\r\n";
+            label1.TextAlign = ContentAlignment.TopCenter;
             // 
-            // Id
+            // orderListScreenButton
             // 
-            Id.HeaderText = "Id";
-            Id.MinimumWidth = 6;
-            Id.Name = "Id";
+            orderListScreenButton.Location = new Point(645, 452);
+            orderListScreenButton.Name = "orderListScreenButton";
+            orderListScreenButton.Size = new Size(120, 50);
+            orderListScreenButton.TabIndex = 1;
+            orderListScreenButton.Text = "Order List Screen";
+            orderListScreenButton.UseVisualStyleBackColor = true;
+            orderListScreenButton.Click += orderListScreenButton_Click;
             // 
-            // CustomerFactoryName
+            // approveOrderButton
             // 
-            CustomerFactoryName.HeaderText = "Customer Factory Name";
-            CustomerFactoryName.MinimumWidth = 6;
-            CustomerFactoryName.Name = "CustomerFactoryName";
+            approveOrderButton.Location = new Point(867, 452);
+            approveOrderButton.Name = "approveOrderButton";
+            approveOrderButton.Size = new Size(120, 50);
+            approveOrderButton.TabIndex = 2;
+            approveOrderButton.Text = "Approve your order";
+            approveOrderButton.UseVisualStyleBackColor = true;
             // 
-            // ManufaturerFactoryName
+            // cancelOrderButton
             // 
-            ManufaturerFactoryName.HeaderText = "Manufaturer Factory Name";
-            ManufaturerFactoryName.MinimumWidth = 6;
-            ManufaturerFactoryName.Name = "ManufaturerFactoryName";
-            // 
-            // ProductName
-            // 
-            ProductName.HeaderText = "Product Name";
-            ProductName.MinimumWidth = 6;
-            ProductName.Name = "ProductName";
-            // 
-            // Quantity
-            // 
-            Quantity.HeaderText = "Quantity";
-            Quantity.MinimumWidth = 6;
-            Quantity.Name = "Quantity";
-            // 
-            // lblFactoryText
-            // 
-            lblFactoryText.AutoSize = true;
-            lblFactoryText.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblFactoryText.ForeColor = SystemColors.Control;
-            lblFactoryText.Location = new Point(439, 59);
-            lblFactoryText.Name = "lblFactoryText";
-            lblFactoryText.Size = new Size(99, 28);
-            lblFactoryText.TabIndex = 1;
-            lblFactoryText.Text = "Orders of ";
-            // 
-            // previousPageBtn
-            // 
-            previousPageBtn.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            previousPageBtn.ForeColor = SystemColors.ActiveCaptionText;
-            previousPageBtn.Location = new Point(60, 59);
-            previousPageBtn.Name = "previousPageBtn";
-            previousPageBtn.Size = new Size(41, 94);
-            previousPageBtn.TabIndex = 2;
-            previousPageBtn.Text = "<";
-            previousPageBtn.UseVisualStyleBackColor = true;
-            previousPageBtn.Click += previousPageBtn_Click;
+            cancelOrderButton.Location = new Point(1093, 452);
+            cancelOrderButton.Name = "cancelOrderButton";
+            cancelOrderButton.Size = new Size(120, 50);
+            cancelOrderButton.TabIndex = 3;
+            cancelOrderButton.Text = "Cancel your order";
+            cancelOrderButton.UseVisualStyleBackColor = true;
             // 
             // OrderScreen
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 30, 30);
-            ClientSize = new Size(1248, 699);
-            Controls.Add(previousPageBtn);
-            Controls.Add(lblFactoryText);
-            Controls.Add(orderDataGridView);
-            ForeColor = SystemColors.Control;
+            ClientSize = new Size(1902, 1033);
+            Controls.Add(cancelOrderButton);
+            Controls.Add(approveOrderButton);
+            Controls.Add(orderListScreenButton);
+            Controls.Add(label1);
             Name = "OrderScreen";
             Text = "OrderScreen";
-            Load += OrderScreen_Load;
-            ((System.ComponentModel.ISupportInitialize)orderDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private DataGridView orderDataGridView;
-        private Label lblFactoryText;
-        private DataGridViewTextBoxColumn Id;
-        private DataGridViewTextBoxColumn CustomerFactoryName;
-        private DataGridViewTextBoxColumn ManufaturerFactoryName;
-        private DataGridViewTextBoxColumn ProductName;
-        private DataGridViewTextBoxColumn Quantity;
-        private Button previousPageBtn;
+        private Label label1;
+        private Button orderListScreenButton;
+        private Button approveOrderButton;
+        private Button cancelOrderButton;
     }
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Dtos;
 
 namespace Business.Concrete
 {
@@ -34,9 +35,26 @@ namespace Business.Concrete
             return new SuccessDataResult<Factory>(result);
         }
 
-        public IResult Add(Factory factory)
+        public IResult Add(FactoryForCreateDto factory)
         {
-            factoryRepository.Add(factory);
+            var result = factoryRepository.Get(f => f.TaxNumber == factory.TaxNumber);
+            if (result != null)
+                return new ErrorResult();
+            result = new Factory
+            {
+                TaxNumber = factory.TaxNumber,
+                Name = factory.Name,
+                Email = factory.Email,
+                Country = factory.Country,
+                Phone = factory.Phone,
+                Status = factory.Status,
+                IsSupplier = factory.IsSupplier,
+                IsCustomer = factory.IsCustomer,
+                PasswordHash = factory.PasswordHash,
+                PasswordSalt = factory.PasswordSalt,
+                TradeGrade = 100
+            };
+            factoryRepository.Add(result);
             return new SuccessResult();
         }
 
@@ -51,9 +69,22 @@ namespace Business.Concrete
             return new ErrorResult();
         }
 
-        public IDataResult<List<Factory>> GetAll()
+        public IDataResult<List<FactoryListDto>> GetAll()
         {
-            return new SuccessDataResult<List<Factory>>(factoryRepository.GetAll());
+            var result = factoryRepository.GetAllFactories();
+            return new SuccessDataResult<List<FactoryListDto>>(result);
+        }
+
+        public IDataResult<List<Factory>> GetAllManufacturer()
+        {
+            var result = factoryRepository.GetAll(f => f.IsSupplier == true);
+            return new SuccessDataResult<List<Factory>>(result);
+        }
+
+        public IDataResult<List<Factory>> GetAllCustomer()
+        {
+            var result = factoryRepository.GetAll(f => f.IsSupplier == false);
+            return new SuccessDataResult<List<Factory>>(result);
         }
 
         public IDataResult<Factory> GetById(int id)
@@ -68,12 +99,21 @@ namespace Business.Concrete
 
         public IResult Update(Factory factory)
         {
-            var result = GetById(factory.Id);
+            var result = GetById(factory.Id).Data;
             
             if (result == null)
                 return new ErrorResult();
 
-            factoryRepository.Update(factory);
+            result.Name = factory.Name;
+            result.Email = factory.Email;
+            result.Country = factory.Country;
+            result.Phone = factory.Phone;
+            result.Status = factory.Status;
+            result.IsSupplier = factory.IsSupplier;
+            result.IsCustomer = factory.IsCustomer;
+            result.TaxNumber = factory.TaxNumber;
+
+            factoryRepository.Update(result);
             return new SuccessResult();
         }
     }

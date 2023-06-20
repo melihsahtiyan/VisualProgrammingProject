@@ -54,19 +54,53 @@ namespace Business.Concrete
             return _productRepository.Get(p => p.Id == id);
         }
 
-        public async void AddAsync(Product product)
+        public IResult Add(ProductForCreateDto product)
         {
-            var result = await _productRepository.AddAsync(product);
+            var result = _productRepository.Get(p => p.Name == product.Name);
+            if (result != null)
+                return new ErrorResult("Product already exists!");
+            result = new Product
+            {
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                Weight = product.Weight,
+                Volume = product.Volume
+            };
+            _productRepository.Add(result);
+            return new SuccessResult("Product added!");
         }
 
-        public async void UpdateAsync(Product product)
+        public IResult AddRange(List<ProductForCreateDto> products)
         {
-            await _productRepository.UpdateAsync(product);
+            foreach (var product in products)
+            {
+                var result = Add(product);
+                if (!result.Success)
+                    return new ErrorResult(result.Message);
+            }
+
+            return new SuccessResult("Products added!");
         }
 
-        public async void DeleteAsync(Product product)
+        public IResult Update(ProductForCreateDto product)
         {
-            await _productRepository.DeleteAsync(product);
+            var result = _productRepository.Get(p => p.Id == product.Id);
+            if (result == null)
+                return new ErrorResult("Product not found!");
+            result.Name = product.Name;
+            result.Description = product.Description;
+            result.Price = product.Price;
+            result.Weight = product.Weight;
+            _productRepository.Update(result);
+            return new SuccessResult("Product updated!");
+        }
+
+        public IResult Delete(ProductForCreateDto product)
+        {
+            var result = _productRepository.Get(p => p.Id == product.Id);
+            _productRepository.Delete(result);
+            return new SuccessResult("Product deleted!");
         }
     }
 }

@@ -41,15 +41,67 @@ namespace Business.Concrete
             return new SuccessDataResult<WarehouseProducts>(result);
         }
 
-        public IResult Add(WarehouseProducts warehouseProducts)
+        public IResult Add(WarehouseProductsForCreateDto warehouseProducts)
         {
-            _warehouseProductsRepository.Add(warehouseProducts);
+            var result =
+                _warehouseProductsRepository.Get(wp =>
+                    wp.ProductId == warehouseProducts.ProductId && wp.WarehouseId == warehouseProducts.WarehouseId);
+            if (result != null)
+            {
+                var quantity = warehouseProducts.Quantity + result.Quantity;
+                var warehouseProductToUpdate = new WarehouseProductsForCreateDto
+                {
+                    Id = result.Id,
+                    ProductId = warehouseProducts.ProductId,
+                    WarehouseId = warehouseProducts.WarehouseId,
+                    Quantity = quantity
+                };
+                Update(warehouseProductToUpdate);
+                return new SuccessResult();
+            }
+            else
+            {
+                result = new WarehouseProducts
+                {
+                    ProductId = warehouseProducts.ProductId,
+                    WarehouseId = warehouseProducts.WarehouseId,
+                    Quantity = warehouseProducts.Quantity
+                };
+
+                _warehouseProductsRepository.Add(result);
+                return new SuccessResult();
+            }
+        }
+
+        public IResult AddRange(List<WarehouseProductsForCreateDto> warehouseProducts)
+        {
+            foreach (var warehouseProduct in warehouseProducts)
+            {
+                var result = Add(warehouseProduct);
+                if (!result.Success)
+                    Console.WriteLine(warehouseProducts);
+                if (!result.Success)
+                {
+                    return new ErrorResult();
+                }
+            }
             return new SuccessResult();
         }
 
-        public IResult Update(WarehouseProducts warehouseProducts)
+        public IResult Update(WarehouseProductsForCreateDto warehouseProducts)
         {
-            _warehouseProductsRepository.Update(warehouseProducts);
+            var result = _warehouseProductsRepository.Get(wp =>
+                               wp.ProductId == warehouseProducts.ProductId && wp.WarehouseId == warehouseProducts.WarehouseId);
+            if (result == null)
+            {
+                return new ErrorResult("Stock not found");
+            }
+            
+            result.Quantity = warehouseProducts.Quantity;
+            result.ProductId = warehouseProducts.ProductId;
+            result.WarehouseId = warehouseProducts.WarehouseId;
+
+            _warehouseProductsRepository.Update(result);
             return new SuccessResult();
         }
 

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistence.Contexts;
@@ -11,9 +12,11 @@ using Persistence.Contexts;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    partial class BaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230618103934_FinalExamChanges")]
+    partial class FinalExamChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,10 +86,6 @@ namespace Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("CustomerFactoryId");
 
-                    b.Property<int>("CustomerWarehouseId")
-                        .HasColumnType("integer")
-                        .HasColumnName("CustomerWarehouseId");
-
                     b.Property<DateTime>("DateOfOrder")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("DateOfOrder");
@@ -107,13 +106,10 @@ namespace Persistence.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("EstimatedDepartureDate");
 
-                    b.Property<bool>("IsCanceled")
-                        .HasColumnType("boolean")
-                        .HasColumnName("IsCanceled");
-
-                    b.Property<int>("ManufacturerWarehouseId")
-                        .HasColumnType("integer")
-                        .HasColumnName("ManufacturerWarehouseId");
+                    b.Property<string>("FromWhere")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("FromWhere");
 
                     b.Property<int>("ManufacturingFactoryId")
                         .HasColumnType("integer")
@@ -127,13 +123,14 @@ namespace Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("Quantity");
 
+                    b.Property<string>("ToWhere")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("ToWhere");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerFactoryId");
-
-                    b.HasIndex("CustomerWarehouseId");
-
-                    b.HasIndex("ManufacturerWarehouseId");
 
                     b.HasIndex("ManufacturingFactoryId");
 
@@ -280,10 +277,6 @@ namespace Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("TaxNumber");
 
-                    b.Property<double>("TradeGrade")
-                        .HasColumnType("double precision")
-                        .HasColumnName("TradeGrade");
-
                     b.ToTable("Factories", (string)null);
                 });
 
@@ -292,18 +285,6 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entities.Factory", "CustomerFactory")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerFactoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Warehouse", "CustomerWarehouse")
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerWarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Warehouse", "ManufacturerWarehouse")
-                        .WithMany()
-                        .HasForeignKey("ManufacturerWarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -320,10 +301,6 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("CustomerFactory");
-
-                    b.Navigation("CustomerWarehouse");
-
-                    b.Navigation("ManufacturerWarehouse");
 
                     b.Navigation("ManufacturingFactory");
 
@@ -378,8 +355,6 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Warehouse", b =>
                 {
-                    b.Navigation("Orders");
-
                     b.Navigation("WarehouseProducts");
                 });
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Utilities.Results;
+using Domain.Dtos;
 using Domain.Entities;
 
 namespace Business.Abstract
@@ -17,8 +18,9 @@ namespace Business.Abstract
         IDataResult<List<Warehouse>> GetAllByWarehouseId(int id);
         IDataResult<List<Warehouse>> GetAllByFactoryName(string factoryName);
         IDataResult<Warehouse> GetAllByWarehouseName(string warehouseName);
-        IResult Add(Warehouse warehouse);
-        IResult Update(Warehouse warehouse);
+        IResult Add(WarehouseForCreateDto warehouse);
+        IResult AddRange(List<WarehouseForCreateDto> warehouses);
+        IResult Update(WarehouseForCreateDto warehouse);
         IResult Delete(Warehouse warehouse);
     }
 }

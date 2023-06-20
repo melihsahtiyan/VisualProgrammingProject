@@ -90,7 +90,7 @@ namespace WindowsApplication.Pages
 
         private void addressTxtBox_TextChanged(object sender, EventArgs e)
         {
-            _userForRegisterDto.Address = addressTxtBox.Text;
+            _userForRegisterDto.Country = addressTxtBox.Text;
         }
 
         private void taxNumberTxtBox_TextChanged(object sender, EventArgs e)
