@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Business.Abstract;
+﻿using Business.Abstract;
 using Domain.Dtos;
 using Domain.Entities;
 using Int32 = System.Int32;
@@ -74,26 +65,19 @@ namespace WindowsApplication.Pages
             quantityTextBox.Enabled = true;
         }
 
+
+
         private void quantityTextBox_TextChanged(object sender, EventArgs e)
         {
-            var keyPressEvent = e as KeyPressEventArgs;
-            if (keyPressEvent != null)
+            try
             {
-                if (!char.IsControl(keyPressEvent.KeyChar) && !char.IsDigit(keyPressEvent.KeyChar))
-                {
-                    var quantity = Int32.Parse(quantityTextBox.Text);
-                    if (quantity > 0)
-                    {
-                        addBtn.Enabled = true;
-                        warehouseProducts.Quantity = quantity;
-                    }
-                }
+                warehouseProducts.Quantity = Convert.ToInt32(quantityTextBox.Text);
             }
-        }
-
-        private void quantityTextBox_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-        {
-            warehouseProducts.Quantity = Int32.Parse(quantityTextBox.Text);
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw ex;
+            }
         }
 
         private void addBtn_Click(object sender, EventArgs e)
@@ -134,5 +118,6 @@ namespace WindowsApplication.Pages
                 warehouseComboBox.Items.Add(warehouse.Name);
             }
         }
+
     }
 }

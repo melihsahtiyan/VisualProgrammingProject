@@ -13,7 +13,9 @@ namespace Domain.Dtos
         public string CustomerFactoryName { get; set; }
         public string ManufacturerFactoryName { get; set; }
         public string ProductName { get; set; }
+        public decimal Volume { get; set; }
         public int Quantity { get; set; }
+        public decimal Price { get; set; }
         public DateTime DateOfOrder { get; set; }
         public DateTime? EstimatedDepartureDate { get; set; }
         public DateTime? DepartureDate { get; set; }

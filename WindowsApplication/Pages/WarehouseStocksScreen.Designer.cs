@@ -47,7 +47,7 @@
             quantityLabel = new Label();
             addStockPanel = new Panel();
             label2 = new Label();
-            quantityTextBox = new MaskedTextBox();
+            quantityTextBox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)warehouseProductsDataGridView).BeginInit();
             addStockPanel.SuspendLayout();
             SuspendLayout();
@@ -231,13 +231,10 @@
             // quantityTextBox
             // 
             quantityTextBox.Location = new Point(158, 420);
-            quantityTextBox.Mask = "00000";
             quantityTextBox.Name = "quantityTextBox";
-            quantityTextBox.PromptChar = ' ';
-            quantityTextBox.Size = new Size(284, 34);
+            quantityTextBox.Size = new Size(125, 34);
             quantityTextBox.TabIndex = 13;
-            quantityTextBox.ValidatingType = typeof(int);
-            quantityTextBox.MaskInputRejected += quantityTextBox_MaskInputRejected;
+            quantityTextBox.TextChanged += quantityTextBox_TextChanged;
             // 
             // WarehouseStocksScreen
             // 
@@ -282,6 +279,6 @@
         private Label quantityLabel;
         private Panel addStockPanel;
         private Label label2;
-        private MaskedTextBox quantityTextBox;
+        private TextBox quantityTextBox;
     }
 }

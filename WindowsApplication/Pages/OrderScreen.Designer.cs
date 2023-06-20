@@ -48,7 +48,7 @@
             // 
             // orderListScreenButton
             // 
-            orderListScreenButton.Location = new Point(645, 452);
+            orderListScreenButton.Location = new Point(792, 452);
             orderListScreenButton.Name = "orderListScreenButton";
             orderListScreenButton.Size = new Size(120, 50);
             orderListScreenButton.TabIndex = 1;
@@ -58,7 +58,7 @@
             // 
             // approveOrderButton
             // 
-            approveOrderButton.Location = new Point(867, 452);
+            approveOrderButton.Location = new Point(1014, 452);
             approveOrderButton.Name = "approveOrderButton";
             approveOrderButton.Size = new Size(120, 50);
             approveOrderButton.TabIndex = 2;
@@ -67,7 +67,7 @@
             // 
             // cancelOrderButton
             // 
-            cancelOrderButton.Location = new Point(1093, 452);
+            cancelOrderButton.Location = new Point(1240, 452);
             cancelOrderButton.Name = "cancelOrderButton";
             cancelOrderButton.Size = new Size(120, 50);
             cancelOrderButton.TabIndex = 3;

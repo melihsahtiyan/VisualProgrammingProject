@@ -40,6 +40,7 @@
             EstimatedDepartureDate = new DataGridViewTextBoxColumn();
             DepartureDate = new DataGridViewTextBoxColumn();
             EstimatedDeliveryDate = new DataGridViewTextBoxColumn();
+            DeliveryDate = new DataGridViewTextBoxColumn();
             FromWhichCity = new DataGridViewTextBoxColumn();
             ToWhichCity = new DataGridViewTextBoxColumn();
             ApprovedByCustomer = new DataGridViewTextBoxColumn();
@@ -49,7 +50,6 @@
             addStockPanel = new Panel();
             customerWarehouseComboBox = new ComboBox();
             label4 = new Label();
-            quantityTextBox = new MaskedTextBox();
             label2 = new Label();
             productComboBox = new ComboBox();
             label3 = new Label();
@@ -59,6 +59,7 @@
             warehouseComboBox = new ComboBox();
             warehouseLabel = new Label();
             factoryLbl = new Label();
+            quantityTextBox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)orderDataGridView).BeginInit();
             addStockPanel.SuspendLayout();
             SuspendLayout();
@@ -76,7 +77,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             orderDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             orderDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            orderDataGridView.Columns.AddRange(new DataGridViewColumn[] { Id, CustomerFactoryName, ManufaturerFactoryName, ProductName, Quantity, DateOfOrder, EstimatedDepartureDate, DepartureDate, EstimatedDeliveryDate, FromWhichCity, ToWhichCity, ApprovedByCustomer, ApprovedByManufacturer });
+            orderDataGridView.Columns.AddRange(new DataGridViewColumn[] { Id, CustomerFactoryName, ManufaturerFactoryName, ProductName, Quantity, DateOfOrder, EstimatedDepartureDate, DepartureDate, EstimatedDeliveryDate, DeliveryDate, FromWhichCity, ToWhichCity, ApprovedByCustomer, ApprovedByManufacturer });
             orderDataGridView.Location = new Point(96, 198);
             orderDataGridView.Margin = new Padding(6);
             orderDataGridView.Name = "orderDataGridView";
@@ -145,6 +146,12 @@
             EstimatedDeliveryDate.MinimumWidth = 6;
             EstimatedDeliveryDate.Name = "EstimatedDeliveryDate";
             // 
+            // DeliveryDate
+            // 
+            DeliveryDate.HeaderText = "Delivery Date";
+            DeliveryDate.MinimumWidth = 6;
+            DeliveryDate.Name = "DeliveryDate";
+            // 
             // FromWhichCity
             // 
             FromWhichCity.HeaderText = "From Which City";
@@ -196,9 +203,9 @@
             // addStockPanel
             // 
             addStockPanel.BackColor = Color.FromArgb(64, 64, 64);
+            addStockPanel.Controls.Add(quantityTextBox);
             addStockPanel.Controls.Add(customerWarehouseComboBox);
             addStockPanel.Controls.Add(label4);
-            addStockPanel.Controls.Add(quantityTextBox);
             addStockPanel.Controls.Add(label2);
             addStockPanel.Controls.Add(productComboBox);
             addStockPanel.Controls.Add(label3);
@@ -234,18 +241,6 @@
             label4.Size = new Size(338, 28);
             label4.TabIndex = 21;
             label4.Text = "Which warehouse you want to deliver";
-            // 
-            // quantityTextBox
-            // 
-            quantityTextBox.Enabled = false;
-            quantityTextBox.Location = new Point(142, 316);
-            quantityTextBox.Margin = new Padding(8);
-            quantityTextBox.Mask = "00000000";
-            quantityTextBox.Name = "quantityTextBox";
-            quantityTextBox.Size = new Size(60, 27);
-            quantityTextBox.TabIndex = 19;
-            quantityTextBox.ValidatingType = typeof(int);
-            quantityTextBox.MaskInputRejected += quantityTextBox_MaskInputRejected;
             // 
             // label2
             // 
@@ -351,7 +346,15 @@
             factoryLbl.TabIndex = 9;
             factoryLbl.Text = "Factory: ";
             // 
-            // OrderScreen
+            // quantityTextBox
+            // 
+            quantityTextBox.Location = new Point(142, 316);
+            quantityTextBox.Name = "quantityTextBox";
+            quantityTextBox.Size = new Size(125, 27);
+            quantityTextBox.TabIndex = 22;
+            quantityTextBox.TextChanged += quantityTextBox_TextChanged;
+            // 
+            // OrderListScreen
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -362,7 +365,7 @@
             Controls.Add(lblFactoryText);
             Controls.Add(orderDataGridView);
             ForeColor = SystemColors.Control;
-            Name = "OrderScreen";
+            Name = "OrderListScreen";
             Text = "OrderScreen";
             Load += OrderScreen_Load;
             ((System.ComponentModel.ISupportInitialize)orderDataGridView).EndInit();
@@ -384,6 +387,11 @@
         private Label warehouseLabel;
         private Label factoryLbl;
         private Label label1;
+        private Label label2;
+        private ComboBox productComboBox;
+        private Label label3;
+        private ComboBox customerWarehouseComboBox;
+        private Label label4;
         private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn CustomerFactoryName;
         private DataGridViewTextBoxColumn ManufaturerFactoryName;
@@ -393,15 +401,11 @@
         private DataGridViewTextBoxColumn EstimatedDepartureDate;
         private DataGridViewTextBoxColumn DepartureDate;
         private DataGridViewTextBoxColumn EstimatedDeliveryDate;
+        private DataGridViewTextBoxColumn DeliveryDate;
         private DataGridViewTextBoxColumn FromWhichCity;
         private DataGridViewTextBoxColumn ToWhichCity;
         private DataGridViewTextBoxColumn ApprovedByCustomer;
         private DataGridViewTextBoxColumn ApprovedByManufacturer;
-        private Label label2;
-        private ComboBox productComboBox;
-        private Label label3;
-        private MaskedTextBox quantityTextBox;
-        private ComboBox customerWarehouseComboBox;
-        private Label label4;
+        private TextBox quantityTextBox;
     }
 }

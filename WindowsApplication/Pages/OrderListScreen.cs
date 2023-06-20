@@ -64,8 +64,8 @@ namespace WindowsApplication.Pages
 
         private void lblFactoryText_Click(object sender, EventArgs e)
         { }
-
-        private void quantityTextBox_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        
+        private void quantityTextBox_TextChanged(object sender, EventArgs e)
         {
             try
             {
@@ -164,5 +164,6 @@ namespace WindowsApplication.Pages
                 productComboBox.Items.Add(product.Name);
             }
         }
+
     }
 }
